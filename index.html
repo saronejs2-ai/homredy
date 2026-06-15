@@ -1787,20 +1787,25 @@
   const db = getFirestore(app);
 async function submitReview(event) {
   event.preventDefault();
-  
+
   const formData = new FormData(event.target);
   const data = Object.fromEntries(formData.entries());
 
   try {
-    await addDoc(collection(db, "reviews"), {
+    // We match 'Reviews' to ensure it connects perfectly
+    await addDoc(collection(db, 'Reviews'), {
       ...data,
       timestamp: new Date()
     });
-    alert("Review submitted successfully!");
+    
+    // Hides the form and reveals the green success checkmark box
+    document.getElementById('reviewForm').style.display = 'none';
+    document.getElementById('submitSuccess').classList.add('show');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+
   } catch (e) {
     console.error("Error adding document: ", e);
   }
-}
-</script>
+}</script>
 </body>
 </html>
