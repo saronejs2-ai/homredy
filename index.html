@@ -1410,9 +1410,10 @@ window.onload = async function() {
 </script>
 
 <script type="module">
+<script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-app.js";
   import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-analytics.js";
-  import { getFirestore, collection, addDoc, getDocs } } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-firestore.js";
+  import { getFirestore, collection, addDoc, getDocs, query, orderBy } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-firestore.js";
 
   const firebaseConfig = {
     apiKey: "AIzaSyC_sF4yTR_BImsRynqvfmoEydjxMIrrIkM",
@@ -1425,36 +1426,57 @@ window.onload = async function() {
   };
 
   const app = initializeApp(firebaseConfig);
-  const analytics = getAnalytics(app);
   const db = getFirestore(app);
 
-  // FIXED: Attached the function directly to window so the HTML form can execute it
+  // 1. Submit Function
   window.submitReview = async function(event) {
     event.preventDefault();
-
     const formData = new FormData(event.target);
     const data = Object.fromEntries(formData.entries());
 
-    // Injecting star configurations into data packet
-    data.rating_overall = window.ratings?.overall || 5;
-    data.rating_landlord = window.ratings?.landlord || 5;
-    data.rating_condition = window.ratings?.condition || 5;
+    data.rating_overall = Number(ratings.overall || 5);
+    data.rating_landlord = Number(ratings.landlord || 5);
+    data.rating_condition = Number(ratings.condition || 5);
 
     try {
-      await addDoc(collection(db, 'Reviews'), {
-        ...data,
-        timestamp: new Date()
-      });
-      
+      await addDoc(collection(db, 'Reviews'), { ...data, timestamp: new Date() });
       document.getElementById('reviewForm').style.display = 'none';
       document.getElementById('submitSuccess').classList.add('show');
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-
+      window.fetchAndRenderReviews(); // Refresh list after submit
     } catch (e) {
-      console.error("Error adding document: ", e);
-      alert("Submission error. Check console data permissions.");
+      console.error(e);
+      alert("Submission error.");
     }
-  }
+  };
+
+  // 2. Fetch and Render Function
+  window.fetchAndRenderReviews = async function() {
+    try {
+      const q = query(collection(db, "Reviews"), orderBy("timestamp", "desc"));
+      const snapshot = await getDocs(q);
+      const reviews = snapshot.docs.map(doc => {
+        const d = doc.data();
+        return {
+          property: d.property || "Unknown",
+          city: d.city || "",
+          locality: d.locality || "",
+          rating: d.rating_overall || 5,
+          text: d.text || "",
+          stay: d.stay_duration || "",
+          date: "Recent",
+          badges: []
+        };
+      });
+      renderBrowse(reviews);
+    } catch (err) {
+      console.error("Fetch error:", err);
+    }
+  };
+
+  // 3. Initial Run
+  window.fetchAndRenderReviews();
+</script>  
+    
 </script>
 </body>
 </html>
