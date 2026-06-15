@@ -1380,7 +1380,31 @@
     renderBrowse(filtered);
   }
 
-  window.onload = function() {
+window.onload = async function() {
+  try {
+    const snapshot = await getDocs(collection(db, "Reviews"));
+
+    const reviews = snapshot.docs.map(doc => {
+      const data = doc.data();
+
+      return {
+        property: data.property || "Unknown Property",
+        city: data.city || "",
+        locality: data.locality || "",
+        rating: data.rating_overall || 5,
+        text: data.review || "",
+        stay: data.stay_duration || "",
+        date: "Recent",
+        badges: []
+      };
+    });
+
+    renderBrowse(reviews);
+
+  } catch (err) {
+    console.error(err);
+  }
+}
      renderBrowse(reviewsData);
   }
 </script>
@@ -1388,7 +1412,7 @@
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-app.js";
   import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-analytics.js";
-  import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-firestore.js";
+  import { getFirestore, collection, addDoc, getDocs } } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-firestore.js";
 
   const firebaseConfig = {
     apiKey: "AIzaSyC_sF4yTR_BImsRynqvfmoEydjxMIrrIkM",
