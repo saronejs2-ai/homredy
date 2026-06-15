@@ -515,7 +515,6 @@
 </head>
 <body>
 
-<!-- NAV -->
 <nav>
   <div class="nav-inner">
     <a class="logo" onclick="showPage('home')">Homr<span>edy</span></a>
@@ -543,10 +542,8 @@
   <button class="nav-cta" onclick="showPage('submit');toggleMenu()">Submit a Review →</button>
 </div>
 
-<!-- ════════════════════════════════ HOME ════════════════════════════════ -->
 <div class="page active" id="page-home">
 
-  <!-- Hero -->
   <section class="hero">
     <div class="container">
       <div class="hero-grid">
@@ -611,14 +608,12 @@
     </div>
   </section>
 
-  <!-- Disclaimer -->
   <div class="container" style="padding-top: 24px;">
     <div class="disclaimer">
       <strong>Disclaimer:</strong> Reviews represent the opinions and experiences of individual tenants. Homredy does not independently verify every statement submitted and reserves the right to remove content that violates its policies.
     </div>
   </div>
 
-  <!-- How it works -->
   <section class="section">
     <div class="container">
       <p class="section-label">How it works</p>
@@ -648,7 +643,6 @@
 
   <div class="divider"></div>
 
-  <!-- Why tenant reviews matter -->
   <section class="section">
     <div class="container">
       <div class="why-grid">
@@ -694,7 +688,6 @@
 
   <div class="divider"></div>
 
-  <!-- Featured Reviews -->
   <section class="section">
     <div class="container">
       <div style="display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 16px;">
@@ -766,9 +759,6 @@
     </div>
   </section>
 
-  <div class="divider"></div>
-
-  <!-- FAQ -->
   <section class="section">
     <div class="container">
       <div style="max-width: 720px; margin: 0 auto;">
@@ -822,7 +812,6 @@
     </div>
   </section>
 
-  <!-- Trust CTA -->
   <div class="container section-sm">
     <div class="trust-section">
       <p class="section-label" style="color: var(--sage-light);">Built for renters</p>
@@ -853,9 +842,6 @@
   </div>
 
 </div>
-<!-- end HOME -->
-
-<!-- ════════════════════════════════ BROWSE ════════════════════════════════ -->
 <div class="page" id="page-browse">
   <div class="page-hero">
     <div class="container">
@@ -870,7 +856,6 @@
       Reviews represent the opinions and experiences of individual tenants. Homredy does not independently verify every statement submitted and reserves the right to remove content that violates its policies.
     </div>
 
-    <!-- Search bar -->
     <div class="search-bar">
       <input class="form-input" type="text" placeholder="🔍  Search by property name..." id="searchProp" oninput="filterReviews()" />
       <input class="form-input" type="text" placeholder="🏙  City" id="searchCity" oninput="filterReviews()" />
@@ -894,8 +879,7 @@
     </div>
 
     <div class="browse-grid" id="browseGrid">
-      <!-- Cards injected by JS -->
-    </div>
+      </div>
 
     <div style="text-align:center; margin-top:48px; padding: 40px; background: var(--white); border-radius: var(--radius); border: 1px solid var(--gray-200);">
       <div style="font-size:36px; margin-bottom:12px;">🏘️</div>
@@ -905,9 +889,6 @@
     </div>
   </div>
 </div>
-<!-- end BROWSE -->
-
-<!-- ════════════════════════════════ SUBMIT ════════════════════════════════ -->
 <div class="page" id="page-submit">
   <div class="page-hero">
     <div class="container">
@@ -924,36 +905,34 @@
 
     <div class="submit-layout">
       <div>
-        <!-- Success state -->
         <div class="success-box" id="submitSuccess">
           <div class="icon">✅</div>
           <h3>Review submitted!</h3>
           <p>Thank you for contributing. Your review will be published after our moderation team reviews it, usually within 48–72 hours.</p>
         </div>
 
-        <form class="review-form" id="reviewForm" onsubmit="submitReview(event)">
-          <!-- Property Info -->
+        <form class="review-form" id="reviewForm" onsubmit="window.submitReview(event)">
           <div>
             <div class="form-section-title">Property Information</div>
           </div>
           <div class="form-row">
             <div class="form-group">
               <label class="form-label">Property / Apartment Name <span>*</span></label>
-              <input class="form-input" type="text" placeholder="e.g. Sunrise Heights" required />
+              <input name="property" class="form-input" type="text" placeholder="e.g. Sunrise Heights" required />
             </div>
             <div class="form-group">
               <label class="form-label">City <span>*</span></label>
-              <input class="form-input" type="text" placeholder="e.g. Bengaluru" required />
+              <input name="city" class="form-input" type="text" placeholder="e.g. Bengaluru" required />
             </div>
           </div>
           <div class="form-row">
             <div class="form-group">
               <label class="form-label">Locality / Area <span>*</span></label>
-              <input class="form-input" type="text" placeholder="e.g. Koramangala" required />
+              <input name="locality" class="form-input" type="text" placeholder="e.g. Koramangala" required />
             </div>
             <div class="form-group">
               <label class="form-label">Length of Stay <span>*</span></label>
-              <select class="form-select" required>
+              <select name="stay_duration" class="form-select" required>
                 <option value="">Select duration</option>
                 <option>Less than 6 months</option>
                 <option>6–12 months</option>
@@ -964,7 +943,6 @@
             </div>
           </div>
 
-          <!-- Ratings -->
           <div>
             <div class="form-section-title">Your Ratings</div>
           </div>
@@ -1001,7 +979,6 @@
             </div>
           </div>
 
-          <!-- Deposit -->
           <div>
             <div class="form-section-title">Security Deposit Experience</div>
           </div>
@@ -1016,7 +993,6 @@
             </div>
           </div>
 
-          <!-- Recommend -->
           <div class="form-group">
             <label class="form-label">Would you recommend this property to others?</label>
             <div class="radio-pills" style="margin-top: 6px;">
@@ -1026,7 +1002,6 @@
             </div>
           </div>
 
-          <!-- Rent again -->
           <div class="form-group">
             <label class="form-label">Would you rent here again?</label>
             <div class="radio-pills" style="margin-top: 6px;">
@@ -1036,23 +1011,21 @@
             </div>
           </div>
 
-          <!-- Written review -->
           <div>
             <div class="form-section-title">Your Written Review</div>
           </div>
           <div class="form-group">
             <label class="form-label">Describe your rental experience <span>*</span></label>
-            <textarea class="form-textarea" style="min-height: 160px;" placeholder="Share your experience — property condition, landlord behaviour, maintenance responsiveness, any issues you faced, what you liked, what future tenants should know..." required></textarea>
+            <textarea name="text" class="form-textarea" style="min-height: 160px;" placeholder="Share your experience..." required></textarea>
             <div class="form-hint">Minimum 100 characters. Be factual and based on your personal experience.</div>
           </div>
 
-          <!-- Contact -->
           <div>
             <div class="form-section-title">Contact & Verification</div>
           </div>
           <div class="form-group">
             <label class="form-label">Email Address <span>*</span></label>
-            <input class="form-input" type="email" placeholder="your@email.com" required />
+            <input name="email" class="form-input" type="email" placeholder="your@email.com" required />
             <div class="form-hint">Used only for review verification. Never displayed publicly.</div>
           </div>
           <div class="form-group">
@@ -1061,21 +1034,19 @@
             <div class="form-hint">You may upload a rental agreement, notice, or other document. Max 5 MB. Not required.</div>
           </div>
 
-          <!-- Consent -->
           <div class="checkbox-group">
             <input type="checkbox" id="consent" required />
-            <label for="consent">I confirm that this review is based on my personal rental experience, is factual to the best of my knowledge, and I have read and agree to the <button type="button" style="background:none;border:none;color:var(--navy);text-decoration:underline;cursor:pointer;font-family:inherit;font-size:14px;" onclick="showPage('guidelines')">Review Guidelines</button> and <button type="button" style="background:none;border:none;color:var(--navy);text-decoration:underline;cursor:pointer;font-family:inherit;font-size:14px;" onclick="showPage('terms')">Terms of Service</button>.</label>
+            <label for="consent">I confirm that this review is based on my personal rental experience...</label>
           </div>
           <div class="checkbox-group">
             <input type="checkbox" id="privacy-consent" required />
-            <label for="privacy-consent">I consent to Homredy collecting and processing my email for review verification, as described in the <button type="button" style="background:none;border:none;color:var(--navy);text-decoration:underline;cursor:pointer;font-family:inherit;font-size:14px;" onclick="showPage('privacy')">Privacy Policy</button>.</label>
+            <label for="privacy-consent">I consent to Homredy collecting and processing my email...</label>
           </div>
 
           <button type="submit" class="btn-primary" style="width: 100%; justify-content: center; padding: 16px; font-size: 16px; border-radius: var(--radius-sm);">Submit Review for Moderation →</button>
         </form>
       </div>
 
-      <!-- Sidebar -->
       <div class="sidebar-tips">
         <div class="tip-card">
           <h4>✏️ Tips for a great review</h4>
@@ -1099,16 +1070,13 @@
     </div>
   </div>
 </div>
-<!-- end SUBMIT -->
-
-<!-- ════════════════════════════════ ABOUT ════════════════════════════════ -->
 <div class="page" id="page-about">
   <section class="section-sm">
     <div class="about-hero">
       <div class="container">
         <p class="section-label">Our story</p>
         <h1>We exist because renters deserve better information.</h1>
-        <p>Homredy was built out of a simple frustration: why do tenants have to rely on 30-minute site visits and gut feeling to make one of the biggest decisions of their year? Real tenant reviews for smarter rental decisions — that's what we're here to enable.</p>
+        <p>Homredy was built out of a simple frustration...</p>
       </div>
     </div>
   </section>
@@ -1119,16 +1087,12 @@
         <div>
           <p class="section-label">The problem</p>
           <h2>The rental market is opaque by default.</h2>
-          <p style="margin-top: 16px; font-size: 16px; line-height: 1.8;">Landlords have years of experience navigating lease agreements, deposit deductions, and tenant turnover. First-time renters — and even experienced ones — often have only a short site visit, photos on a listing portal, and an agent's word to go on.</p>
-          <p style="margin-top: 14px; font-size: 16px; line-height: 1.8;">What they can't easily discover: Is the water supply reliable? Does the owner respond to maintenance requests? Were previous tenants' deposits returned fairly? Was the apartment actually in the condition shown?</p>
-          <p style="margin-top: 14px; font-size: 16px; line-height: 1.8;">This information exists — but it's locked inside the experiences of the people who came before you.</p>
+          <p style="margin-top: 16px; font-size: 16px; line-height: 1.8;">Landlords have years of experience navigating lease agreements, deposit deductions, and tenant turnover.</p>
         </div>
         <div>
           <p class="section-label">Our solution</p>
           <h2>A community built on honesty.</h2>
-          <p style="margin-top: 16px; font-size: 16px; line-height: 1.8;">Homredy unlocks that information. We are a platform where tenants who have lived in a property can share their experience — and where future tenants can read it before making a decision.</p>
-          <p style="margin-top: 14px; font-size: 16px; line-height: 1.8;">Think of it as Glassdoor for rental properties. Honest. Community-powered. Moderated for quality. And entirely free.</p>
-          <p style="margin-top: 14px; font-size: 16px; line-height: 1.8;">We do not list properties for rent. We do not help landlords find tenants. We do not take commissions. Homredy exists only to serve renters.</p>
+          <p style="margin-top: 16px; font-size: 16px; line-height: 1.8;">Homredy unlocks that information...</p>
         </div>
       </div>
     </div>
@@ -1144,54 +1108,37 @@
         <div class="value-card">
           <div class="value-icon">🔍</div>
           <h3>Transparency</h3>
-          <p>Information that affects your home life should be accessible, not locked behind agents and listings. We believe tenants have a right to honest insight.</p>
+          <p>Information that affects your home life should be accessible, not locked behind agents and listings.</p>
         </div>
         <div class="value-card">
           <div class="value-icon">🤝</div>
           <h3>Community</h3>
-          <p>Every review on Homredy was written by someone like you — someone who signed a lease, lived there, and wants to help the next person decide better.</p>
+          <p>Every review on Homredy was written by someone like you.</p>
         </div>
         <div class="value-card">
           <div class="value-icon">🛡️</div>
           <h3>Integrity</h3>
-          <p>We moderate every review. We don't auto-publish. We don't allow landlords to pay for better visibility. The platform's credibility depends on honesty.</p>
+          <p>We moderate every review. We don't auto-publish.</p>
         </div>
         <div class="value-card">
           <div class="value-icon">🏠</div>
           <h3>Renter-first</h3>
-          <p>Our product decisions, features, and policies are all designed with one person in mind: the tenant searching for a safe, comfortable, fairly-priced home.</p>
+          <p>Our product decisions, features, and policies are all designed with one person in mind.</p>
         </div>
         <div class="value-card">
           <div class="value-icon">🔒</div>
           <h3>Privacy</h3>
-          <p>We collect only what we need, store it responsibly, and never sell your personal information. Your data is yours.</p>
+          <p>We collect only what we need, store it responsibly, and never sell your personal information.</p>
         </div>
         <div class="value-card">
           <div class="value-icon">⚖️</div>
           <h3>Fairness</h3>
-          <p>Reviews must meet our guidelines. We investigate complaints, remove content that violates our policies, and apply our standards consistently.</p>
+          <p>Reviews must meet our guidelines. We investigate complaints.</p>
         </div>
       </div>
     </div>
   </section>
-
-  <div class="divider"></div>
-
-  <section class="section">
-    <div class="container" style="max-width: 720px;">
-      <p class="section-label" style="text-align:center;">The mission</p>
-      <h2 style="text-align:center; font-size: clamp(28px, 4vw, 48px);">"Know Before You Move."</h2>
-      <p style="text-align:center; font-size: 17px; margin-top: 20px; line-height: 1.8;">We're building India's most trusted database of rental property experiences — one honest review at a time.</p>
-      <div style="display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; margin-top: 32px;">
-        <button class="btn-primary" onclick="showPage('submit')">Submit a Review</button>
-        <button class="btn-secondary" onclick="showPage('browse')">Browse Reviews</button>
-      </div>
-    </div>
-  </section>
 </div>
-<!-- end ABOUT -->
-
-<!-- ════════════════════════════════ CONTACT ════════════════════════════════ -->
 <div class="page" id="page-contact">
   <div class="page-hero">
     <div class="container">
@@ -1240,7 +1187,6 @@
           <button type="submit" class="btn-primary" style="width: 100%; justify-content: center; padding: 14px;">Send Message →</button>
         </form>
       </div>
-
       <div>
         <h3 style="margin-bottom: 24px;">Other ways to reach us</h3>
         <div class="contact-info-item">
@@ -1248,347 +1194,51 @@
           <div>
             <h4>Email</h4>
             <p style="margin-top: 4px; font-size: 14px;">hello@homredy.com</p>
-            <p style="font-size: 13px; color: var(--gray-400);">For general queries and feedback</p>
           </div>
-        </div>
-        <div class="contact-info-item">
-          <div class="ci-icon">⚠️</div>
-          <div>
-            <h4>Review Issues</h4>
-            <p style="margin-top: 4px; font-size: 14px;">moderation@homredy.com</p>
-            <p style="font-size: 13px; color: var(--gray-400);">To report or dispute a review</p>
-          </div>
-        </div>
-        <div class="contact-info-item">
-          <div class="ci-icon">🔒</div>
-          <div>
-            <h4>Privacy Requests</h4>
-            <p style="margin-top: 4px; font-size: 14px;">privacy@homredy.com</p>
-            <p style="font-size: 13px; color: var(--gray-400);">For data access or deletion requests</p>
-          </div>
-        </div>
-        <div class="card" style="margin-top: 8px;">
-          <h4 style="margin-bottom: 8px;">⏱ Response times</h4>
-          <p style="font-size: 13px; line-height: 1.8;">General queries: 2–3 business days<br>Review reports: 5–7 business days<br>Privacy requests: Within 30 days</p>
         </div>
       </div>
     </div>
   </div>
 </div>
-<!-- end CONTACT -->
-
-<!-- ════════════════════════════════ GUIDELINES ════════════════════════════════ -->
 <div class="page" id="page-guidelines">
   <div class="legal-hero">
     <div class="container">
       <p class="section-label" style="color: var(--sage-light);">Community standards</p>
       <h1>Review Guidelines</h1>
-      <p>Our standards for honest, helpful, and fair tenant reviews.</p>
-    </div>
-  </div>
-
-  <div class="container section-sm">
-    <div class="legal-content">
-      <p>Homredy is a community-powered platform. The value of every review depends on its honesty, accuracy, and fairness. These guidelines exist to maintain trust for everyone who uses Homredy — including you.</p>
-      <p>All reviews are manually moderated before publication. Homredy reserves the right to remove, edit, or decline to publish any review that violates these guidelines.</p>
-
-      <h2>What makes a good review</h2>
-      <ul class="guidelines-list">
-        <li class="guideline-item">
-          <div class="guideline-icon">✅</div>
-          <div><h4>Based on personal experience</h4><p>Reviews must reflect your direct experience as a tenant at that property. Do not submit reviews on behalf of others, for properties you have not rented, or based on second-hand accounts.</p></div>
-        </li>
-        <li class="guideline-item">
-          <div class="guideline-icon">✅</div>
-          <div><h4>Factual and accurate</h4><p>Only include claims you know to be true from your own experience. Avoid exaggeration. If you are unsure of a fact, leave it out rather than risk inaccuracy.</p></div>
-        </li>
-        <li class="guideline-item">
-          <div class="guideline-icon">✅</div>
-          <div><h4>Specific and useful</h4><p>Helpful reviews describe specific events, timelines, and situations. "The landlord took 3 months to fix the water heater" is more useful than "the landlord was bad." Specificity builds trust.</p></div>
-        </li>
-        <li class="guideline-item">
-          <div class="guideline-icon">✅</div>
-          <div><h4>Balanced and fair</h4><p>Share both positives and negatives where relevant. Even a difficult rental experience may have had aspects that were acceptable. Honest, balanced reviews are the most credible.</p></div>
-        </li>
-      </ul>
-
-      <h2>What is not allowed</h2>
-      <ul class="guidelines-list">
-        <li class="guideline-item">
-          <div class="guideline-icon">🚫</div>
-          <div><h4>Abusive or threatening language</h4><p>Reviews must not contain insults, threats, intimidation, or aggressive language directed at any individual or business. Express your experience in civil, measured terms.</p></div>
-        </li>
-        <li class="guideline-item">
-          <div class="guideline-icon">🚫</div>
-          <div><h4>Discriminatory content</h4><p>Reviews must not contain content that discriminates based on religion, caste, race, gender, sexual orientation, disability, or any other protected characteristic.</p></div>
-        </li>
-        <li class="guideline-item">
-          <div class="guideline-icon">🚫</div>
-          <div><h4>False allegations</h4><p>Do not make claims that you cannot substantiate from your own direct experience. False or defamatory allegations are grounds for immediate removal and may have legal consequences.</p></div>
-        </li>
-        <li class="guideline-item">
-          <div class="guideline-icon">🚫</div>
-          <div><h4>Personal identifying information</h4><p>Do not include full names, phone numbers, email addresses, financial information, ID numbers, or other personal details of individuals in your review.</p></div>
-        </li>
-        <li class="guideline-item">
-          <div class="guideline-icon">🚫</div>
-          <div><h4>Promotional or spam content</h4><p>Reviews are for genuine rental experiences only. Promotional content, advertisements, links, or unrelated content will be removed.</p></div>
-        </li>
-        <li class="guideline-item">
-          <div class="guideline-icon">🚫</div>
-          <div><h4>Conflict of interest reviews</h4><p>Property owners, agents, or anyone with a financial interest in a property may not submit reviews for that property. This includes reviews intended to artificially improve ratings.</p></div>
-        </li>
-      </ul>
-
-      <h2>Moderation and enforcement</h2>
-      <p>All reviews are manually reviewed by our moderation team before publication. We do not auto-publish any content. During review, we assess submissions against these guidelines and may:</p>
-      <ul>
-        <li>Approve and publish the review as submitted</li>
-        <li>Request clarification or edits from the submitter</li>
-        <li>Decline to publish without detailed explanation</li>
-        <li>Remove a published review if a valid complaint is received</li>
-      </ul>
-      <p>Homredy's decision on moderation is final. If you believe a review violates these guidelines, please contact us at <strong>moderation@homredy.com</strong>.</p>
-
-      <h2>Important disclaimer</h2>
-      <div class="disclaimer">
-        Reviews represent the opinions and experiences of individual tenants. Homredy does not independently verify every statement submitted and reserves the right to remove content that violates its policies. Published reviews do not constitute a recommendation, endorsement, or legal assessment of any property or individual.
-      </div>
     </div>
   </div>
 </div>
-<!-- end GUIDELINES -->
 
-<!-- ════════════════════════════════ PRIVACY ════════════════════════════════ -->
 <div class="page" id="page-privacy">
   <div class="legal-hero">
     <div class="container">
       <h1>Privacy Policy</h1>
-      <p>Last updated: June 2025 · Applicable to users in India</p>
-    </div>
-  </div>
-  <div class="container section-sm">
-    <div class="legal-content">
-      <p>This Privacy Policy describes how Homredy ("we", "us", "our") collects, uses, and handles your personal information when you use our website and services at homredy.com ("Platform"). By using the Platform, you agree to this policy.</p>
-
-      <h2>1. Information We Collect</h2>
-      <h3>Information you provide directly</h3>
-      <ul>
-        <li><strong>Email address:</strong> Collected when you submit a review, contact us, or create an account. Used for review verification and communication only.</li>
-        <li><strong>Review content:</strong> Property name, location, ratings, written experience, and any supporting documents you choose to upload.</li>
-        <li><strong>Contact form submissions:</strong> Your name, email, and message when you contact us.</li>
-      </ul>
-
-      <h3>Information collected automatically</h3>
-      <ul>
-        <li><strong>Usage data:</strong> Pages visited, time spent, search queries entered on the platform.</li>
-        <li><strong>Device information:</strong> Browser type, operating system, device type, screen resolution.</li>
-        <li><strong>IP address:</strong> Collected for security and fraud prevention purposes.</li>
-        <li><strong>Cookies:</strong> As described in our Cookie Policy.</li>
-      </ul>
-
-      <h2>2. How We Use Your Information</h2>
-      <ul>
-        <li>To verify and moderate submitted reviews before publication</li>
-        <li>To communicate with you about your submission or inquiry</li>
-        <li>To detect and prevent spam, fraud, or policy violations</li>
-        <li>To improve the platform based on aggregate usage data</li>
-        <li>To respond to legal obligations or law enforcement requests</li>
-      </ul>
-      <p>We do not sell your personal data to third parties. We do not share your email address with landlords, property owners, or real estate agents.</p>
-
-      <h2>3. Legal Basis for Processing</h2>
-      <p>We process your personal data on the following bases:</p>
-      <ul>
-        <li><strong>Consent:</strong> You provide explicit consent when submitting a review or contacting us.</li>
-        <li><strong>Legitimate interests:</strong> We may process data to prevent fraud, ensure platform security, and improve services.</li>
-        <li><strong>Legal obligation:</strong> Where required by Indian law.</li>
-      </ul>
-
-      <h2>4. Data Retention</h2>
-      <p>We retain your email address for as long as needed to manage your submission or inquiry. Published review content is retained for the duration the review remains on the platform. You may request deletion at any time (see User Rights below).</p>
-
-      <h2>5. Cookies</h2>
-      <p>We use essential and analytics cookies. Please see our <button style="background:none;border:none;color:var(--navy);text-decoration:underline;cursor:pointer;font-family:inherit;font-size:15px;" onclick="showPage('cookies')">Cookie Policy</button> for details.</p>
-
-      <h2>6. Third-Party Services</h2>
-      <p>We may use third-party analytics tools (such as Google Analytics) to understand how the platform is used. These providers process data in accordance with their own privacy policies. We do not permit these providers to use your data for their own advertising purposes.</p>
-
-      <h2>7. Your Rights</h2>
-      <p>As a user of our platform, you have the following rights regarding your personal data:</p>
-      <ul>
-        <li><strong>Access:</strong> Request a copy of the personal data we hold about you.</li>
-        <li><strong>Correction:</strong> Request correction of inaccurate data.</li>
-        <li><strong>Deletion:</strong> Request deletion of your personal data, subject to legal obligations.</li>
-        <li><strong>Withdrawal of consent:</strong> Withdraw consent for processing at any time.</li>
-        <li><strong>Objection:</strong> Object to processing based on legitimate interests.</li>
-      </ul>
-      <p>To exercise any of these rights, contact us at <strong>privacy@homredy.com</strong>. We will respond within 30 days.</p>
-
-      <h2>8. Security</h2>
-      <p>We implement reasonable technical and organisational measures to protect your personal data from unauthorised access, loss, or misuse. No internet transmission is 100% secure; however, we take the protection of your data seriously.</p>
-
-      <h2>9. Children's Privacy</h2>
-      <p>Homredy is not directed at individuals under the age of 18. We do not knowingly collect personal data from minors. If you believe a minor has submitted personal data, please contact us immediately.</p>
-
-      <h2>10. Changes to This Policy</h2>
-      <p>We may update this Privacy Policy periodically. Material changes will be notified on the platform. Continued use of the platform after changes constitutes acceptance of the updated policy.</p>
-
-      <h2>11. Contact</h2>
-      <p>For privacy-related queries: <strong>privacy@homredy.com</strong><br>For general contact: <strong>hello@homredy.com</strong></p>
-      <p style="color: var(--gray-400); font-size: 13px; margin-top: 8px;">This policy is drafted in accordance with applicable Indian data protection principles. Homredy does not claim GDPR compliance.</p>
     </div>
   </div>
 </div>
-<!-- end PRIVACY -->
 
-<!-- ════════════════════════════════ TERMS ════════════════════════════════ -->
 <div class="page" id="page-terms">
   <div class="legal-hero">
     <div class="container">
       <h1>Terms of Service</h1>
-      <p>Last updated: June 2025 · Please read carefully before using Homredy.</p>
-    </div>
-  </div>
-  <div class="container section-sm">
-    <div class="legal-content">
-      <p>These Terms of Service ("Terms") govern your access to and use of the Homredy platform at homredy.com ("Platform") operated by Homredy ("Company", "we", "us"). By accessing or using the Platform, you agree to be bound by these Terms.</p>
-
-      <h2>1. Eligibility and Account</h2>
-      <p>You must be at least 18 years old to use this Platform. By using Homredy, you represent that you meet this requirement. You are responsible for maintaining the confidentiality of any account credentials and for all activities under your account.</p>
-
-      <h2>2. User Responsibilities</h2>
-      <p>By using Homredy, you agree to:</p>
-      <ul>
-        <li>Provide only truthful, accurate, and personally experienced information</li>
-        <li>Comply with our Review Guidelines at all times</li>
-        <li>Not impersonate any person or entity</li>
-        <li>Not submit reviews for properties you have not personally rented</li>
-        <li>Not attempt to manipulate ratings through false or coordinated reviews</li>
-        <li>Not use the Platform for any unlawful purpose</li>
-        <li>Not attempt to reverse engineer, scrape, or disrupt the Platform</li>
-      </ul>
-
-      <h2>3. Content Ownership</h2>
-      <p>You retain ownership of the content you submit (your review text, ratings, and uploaded documents). By submitting content, you grant Homredy a non-exclusive, royalty-free, worldwide licence to display, store, and distribute your content on the Platform and in connection with Homredy's services.</p>
-      <p>You represent that your submitted content does not infringe any third-party rights, is not defamatory, and complies with applicable law.</p>
-
-      <h2>4. Review Moderation</h2>
-      <p>Homredy does not auto-publish reviews. All submissions are subject to manual moderation. We reserve the right to:</p>
-      <ul>
-        <li>Decline to publish any review without stating a reason</li>
-        <li>Remove any published review that violates our guidelines or applicable law</li>
-        <li>Edit metadata (such as property category) without altering the content of a review</li>
-      </ul>
-      <p>Moderation decisions are at Homredy's sole discretion and are final.</p>
-
-      <h2>5. Platform Content and Accuracy</h2>
-      <p>Reviews represent the individual opinions and experiences of tenants. Homredy does not verify the accuracy of every claim and does not endorse any review or its contents. The Platform is provided for informational purposes only and should not be relied upon as the sole basis for any legal, financial, or tenancy decision.</p>
-
-      <h2>6. Limitation of Liability</h2>
-      <p>To the fullest extent permitted by applicable law, Homredy and its directors, employees, and affiliates shall not be liable for:</p>
-      <ul>
-        <li>Any indirect, incidental, special, or consequential damages</li>
-        <li>Loss of data or business resulting from use or inability to use the Platform</li>
-        <li>The accuracy, completeness, or reliability of any user-submitted review</li>
-        <li>Any decision made by a user in reliance on Platform content</li>
-      </ul>
-      <p>In any case, Homredy's maximum liability to you shall not exceed INR 1,000.</p>
-
-      <h2>7. Indemnification</h2>
-      <p>You agree to indemnify and hold harmless Homredy from any claims, losses, or damages (including legal costs) arising from your use of the Platform, your submitted content, or your violation of these Terms.</p>
-
-      <h2>8. Account Termination</h2>
-      <p>We reserve the right to suspend or terminate access to the Platform at our discretion, including for:</p>
-      <ul>
-        <li>Violation of these Terms or Review Guidelines</li>
-        <li>Submission of false or defamatory content</li>
-        <li>Any conduct harmful to the Platform or its community</li>
-      </ul>
-
-      <h2>9. Intellectual Property</h2>
-      <p>All Platform design, code, branding, logos, and non-user-generated content are the property of Homredy and are protected by applicable intellectual property laws. You may not reproduce or use Platform materials without prior written consent.</p>
-
-      <h2>10. Dispute Resolution</h2>
-      <p>Any disputes arising from these Terms or your use of the Platform shall first be attempted to be resolved through good-faith negotiation. If unresolved within 30 days, disputes shall be subject to the exclusive jurisdiction of the courts in Bengaluru, Karnataka, India. These Terms are governed by the laws of India.</p>
-
-      <h2>11. Changes to Terms</h2>
-      <p>We may revise these Terms at any time. Updated Terms will be posted on the Platform with a revised date. Continued use of the Platform after changes constitutes acceptance.</p>
-
-      <h2>12. Contact</h2>
-      <p>For legal queries: <strong>hello@homredy.com</strong></p>
     </div>
   </div>
 </div>
-<!-- end TERMS -->
 
-<!-- ════════════════════════════════ COOKIES ════════════════════════════════ -->
 <div class="page" id="page-cookies">
   <div class="legal-hero">
     <div class="container">
       <h1>Cookie Policy</h1>
-      <p>Last updated: June 2025</p>
-    </div>
-  </div>
-  <div class="container section-sm">
-    <div class="legal-content">
-      <p>This Cookie Policy explains how Homredy uses cookies and similar technologies when you visit homredy.com. By using the Platform, you consent to our use of cookies as described here.</p>
-
-      <h2>1. What Are Cookies?</h2>
-      <p>Cookies are small text files placed on your device by a website. They help the website remember your preferences, understand how you use it, and improve your experience over time. Cookies cannot run programs or deliver viruses to your device.</p>
-
-      <h2>2. Types of Cookies We Use</h2>
-
-      <h3>Essential Cookies</h3>
-      <p>These cookies are necessary for the Platform to function and cannot be disabled. They are set in response to your actions, such as form submissions, and do not collect personal information for marketing purposes.</p>
-      <ul>
-        <li><strong>Session cookies:</strong> Maintain your session as you navigate the Platform</li>
-        <li><strong>Security cookies:</strong> Help detect and prevent fraudulent activity</li>
-        <li><strong>Consent cookies:</strong> Remember your cookie preference</li>
-      </ul>
-
-      <h3>Analytics Cookies</h3>
-      <p>We use analytics cookies to understand how visitors interact with the Platform — which pages are visited most, how long users stay, and where they come from. This helps us improve the Platform.</p>
-      <ul>
-        <li><strong>Google Analytics:</strong> Collects anonymous aggregate usage data. IP addresses are anonymised. Data is not used for advertising targeting.</li>
-      </ul>
-      <p>You may opt out of analytics cookies via the cookie banner or by disabling cookies in your browser settings.</p>
-
-      <h2>3. Cookies We Do Not Use</h2>
-      <p>Homredy does not use:</p>
-      <ul>
-        <li>Advertising or targeting cookies</li>
-        <li>Social media tracking cookies</li>
-        <li>Third-party marketing cookies</li>
-        <li>Profiling cookies of any kind</li>
-      </ul>
-
-      <h2>4. Managing Cookies</h2>
-      <p>You can control cookies through:</p>
-      <ul>
-        <li><strong>Our cookie banner:</strong> Shown on your first visit, allowing you to accept or decline analytics cookies</li>
-        <li><strong>Browser settings:</strong> Most browsers allow you to refuse or delete cookies. Disabling essential cookies may affect Platform functionality.</li>
-        <li><strong>Browser-specific guides:</strong> See the help documentation for Chrome, Firefox, Safari, or Edge for instructions on managing cookies.</li>
-      </ul>
-
-      <h2>5. Changes to This Policy</h2>
-      <p>We may update this Cookie Policy to reflect changes in our practices or applicable law. Material changes will be communicated via the Platform.</p>
-
-      <h2>6. Contact</h2>
-      <p>For questions about cookies: <strong>privacy@homredy.com</strong></p>
     </div>
   </div>
 </div>
-<!-- end COOKIES -->
 
-<!-- ════════════════════════════════ FOOTER ════════════════════════════════ -->
 <footer>
   <div class="container">
     <div class="footer-grid">
       <div class="footer-brand">
         <div class="logo">Homr<span style="color:var(--sage-light);">edy</span></div>
         <p>Real tenant reviews for smarter rental decisions. Know before you move.</p>
-        <p style="margin-top:12px; font-size: 12px; color: rgba(255,255,255,0.4);">Reviews on this platform represent individual tenant experiences. Homredy does not independently verify all statements.</p>
       </div>
       <div class="footer-col">
         <h4>Platform</h4>
@@ -1599,22 +1249,6 @@
           <li><a onclick="showPage('contact')">Contact Us</a></li>
         </ul>
       </div>
-      <div class="footer-col">
-        <h4>Community</h4>
-        <ul class="footer-links">
-          <li><a onclick="showPage('guidelines')">Review Guidelines</a></li>
-          <li><a onclick="showPage('about')">Our Mission</a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h4>Legal</h4>
-        <ul class="footer-links">
-          <li><a onclick="showPage('privacy')">Privacy Policy</a></li>
-          <li><a onclick="showPage('terms')">Terms of Service</a></li>
-          <li><a onclick="showPage('cookies')">Cookie Policy</a></li>
-          <li><a onclick="showPage('guidelines')">Content Guidelines</a></li>
-        </ul>
-      </div>
     </div>
     <div class="footer-bottom">
       <p>© 2025 Homredy. All rights reserved.</p>
@@ -1623,9 +1257,8 @@
   </div>
 </footer>
 
-<!-- Cookie Banner -->
 <div class="cookie-banner" id="cookieBanner">
-  <p>We use essential and analytics cookies to improve your experience. Read our <button style="background:none;border:none;color:var(--navy);text-decoration:underline;cursor:pointer;font-family:inherit;font-size:13px;" onclick="showPage('cookies')">Cookie Policy</button>.</p>
+  <p>We use essential and analytics cookies to improve your experience.</p>
   <div class="cookie-actions">
     <button class="btn-secondary" style="padding:9px 20px;font-size:13px;" onclick="declineCookies()">Decline Analytics</button>
     <button class="btn-primary" style="padding:9px 20px;font-size:13px;" onclick="acceptCookies()">Accept All</button>
@@ -1636,9 +1269,9 @@
   // ── Page routing ──
   function showPage(name) {
     document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-    document.getElementById('page-' + name).classList.add('active');
+    const targetedPage = document.getElementById('page-' + name);
+    if(targetedPage) targetedPage.classList.add('active');
     window.scrollTo({ top: 0, behavior: 'smooth' });
-    // Update active nav
     document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
   }
 
@@ -1660,21 +1293,15 @@
   }
 
   // ── Star rating picker ──
-  const ratings = {};
+  const ratings = { overall: 5, landlord: 5, condition: 5 };
   function setRating(name, val) {
     ratings[name] = val;
     const container = document.getElementById('stars-' + name);
-    container.querySelectorAll('.star-btn').forEach((btn, i) => {
-      btn.classList.toggle('active', i < val);
-    });
-  }
-
-  // ── Review form submit ──
-  function submitReview(e) {
-    e.preventDefault();
-    document.getElementById('reviewForm').style.display = 'none';
-    document.getElementById('submitSuccess').classList.add('show');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    if(container) {
+      container.querySelectorAll('.star-btn').forEach((btn, i) => {
+        btn.classList.toggle('active', i < val);
+      });
+    }
   }
 
   // ── Contact form submit ──
@@ -1697,17 +1324,9 @@
     document.getElementById('cookieBanner').classList.add('hidden');
   }
 
-  // ── Browse reviews data ──
+  // ── Browse reviews mock local data data ──
   const reviewsData = [
-    { property: 'Prestige Tranquil Homes', city: 'Bengaluru', locality: 'Whitefield', rating: 5, date: 'Nov 2024', stay: '22 months', text: 'Exceptional experience. Building manager always available, deposit returned in full within 2 weeks with clear itemised statement. Would highly recommend.', badges: [{label: '✓ Deposit Returned', type: 'sage'}] },
-    { property: 'Andheri West PG Residency', city: 'Mumbai', locality: 'Andheri West', rating: 3, date: 'Sep 2024', stay: '9 months', text: 'Location great but owner difficult to reach. Water heater broken for 3 months. Deposit deductions not properly explained at vacating.', badges: [{label: '⚠ Deposit Issues', type: 'red'}] },
-    { property: 'DLF Magnolias Block C', city: 'Gurugram', locality: 'Sector 42', rating: 4, date: 'Jan 2025', stay: '18 months', text: 'Good society, tight security. Landlord took 6 weeks to return deposit but returned in full. Minor plumbing issues were eventually resolved.', badges: [{label: 'Good Society', type: 'navy'}] },
-    { property: 'Green Valley Residency', city: 'Pune', locality: 'Baner', rating: 2, date: 'Aug 2024', stay: '8 months', text: 'Water supply issues in summer went unresolved for months. Multiple complaints ignored. Would not recommend. Wish I had known before signing.', badges: [{label: '⚠ Maintenance Issues', type: 'red'}] },
-    { property: 'Sunrise Heights', city: 'Bengaluru', locality: 'Koramangala', rating: 4, date: 'Mar 2025', stay: '14 months', text: 'Maintenance was prompt and landlord returned our deposit within 3 weeks. No unexpected deductions. Occasional minor issues but always addressed.', badges: [{label: '✓ Recommended', type: 'sage'}] },
-    { property: 'Hiranandani Gardens', city: 'Mumbai', locality: 'Powai', rating: 5, date: 'Feb 2025', stay: '26 months', text: 'Fantastic gated society. Well maintained, helpful staff, immediate maintenance response. Landlord was professional throughout. One of the best rental experiences.', badges: [{label: '✓ Highly Recommended', type: 'sage'}] },
-    { property: 'Sobha Dream Acres', city: 'Bengaluru', locality: 'Panathur', rating: 4, date: 'Apr 2025', stay: '12 months', text: 'Good apartment with modern amenities. Landlord was responsive to most issues. Deposit process took about a month but was ultimately fair.', badges: [{label: 'Modern Amenities', type: 'navy'}] },
-    { property: 'Chandan Apartments', city: 'Hyderabad', locality: 'Madhapur', rating: 3, date: 'Dec 2024', stay: '11 months', text: 'Average experience. Building is old and shows its age. Landlord responsive but repairs were temporary fixes. Location is excellent for IT professionals.', badges: [{label: 'Good Location', type: 'navy'}] },
-    { property: 'Orchid Heights', city: 'Chennai', locality: 'Adyar', rating: 5, date: 'May 2025', stay: '20 months', text: 'Wonderful experience. Clean property, professional landlord, deposit returned within 2 weeks. Maintenance staff always available. Highly recommend to working professionals.', badges: [{label: '✓ Deposit Returned', type: 'sage'}] },
+    { property: 'Prestige Tranquil Homes', city: 'Bengaluru', locality: 'Whitefield', rating: 5, date: 'Nov 2024', stay: '22 months', text: 'Exceptional experience.', badges: [{label: '✓ Deposit Returned', type: 'sage'}] }
   ];
 
   function starsHTML(n) {
@@ -1724,6 +1343,7 @@
 
   function renderBrowse(data) {
     const grid = document.getElementById('browseGrid');
+    if(!grid) return;
     document.getElementById('resultsCount').textContent = `Showing ${data.length} review${data.length !== 1 ? 's' : ''}`;
     grid.innerHTML = data.map(r => `
       <div class="review-card">
@@ -1740,7 +1360,7 @@
         <div class="rc-text">${r.text}</div>
         <div class="rc-footer">
           <div class="rc-meta">Stayed ${r.stay} · ${r.date}</div>
-          <div class="rc-badges">${r.badges.map(badgeHTML).join('')}</div>
+          <div class="rc-badges">${r.badges ? r.badges.map(badgeHTML).join('') : ''}</div>
         </div>
       </div>
     `).join('');
@@ -1760,17 +1380,16 @@
     renderBrowse(filtered);
   }
 
-  renderBrowse(reviewsData);
+  window.onload = function() {
+     renderBrowse(reviewsData);
+  }
 </script>
+
 <script type="module">
-  // Import the functions you need from the SDKs you need
   import { initializeApp } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-app.js";
   import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-analytics.js";
-   import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-firestore.js";
-  // https://firebase.google.com/docs/web/setup#available-libraries
+  import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-firestore.js";
 
-  // Your web app's Firebase configuration
-  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
   const firebaseConfig = {
     apiKey: "AIzaSyC_sF4yTR_BImsRynqvfmoEydjxMIrrIkM",
     authDomain: "homredy-fb5b0.firebaseapp.com",
@@ -1781,31 +1400,37 @@
     measurementId: "G-ZN7YBVDH3R"
   };
 
-  // Initialize Firebase
   const app = initializeApp(firebaseConfig);
   const analytics = getAnalytics(app);
   const db = getFirestore(app);
-async function submitReview(event) {
-  event.preventDefault();
 
-  const formData = new FormData(event.target);
-  const data = Object.fromEntries(formData.entries());
+  // FIXED: Attached the function directly to window so the HTML form can execute it
+  window.submitReview = async function(event) {
+    event.preventDefault();
 
-  try {
-    // We match 'Reviews' to ensure it connects perfectly
-    await addDoc(collection(db, 'Reviews'), {
-      ...data,
-      timestamp: new Date()
-    });
-    
-    // Hides the form and reveals the green success checkmark box
-    document.getElementById('reviewForm').style.display = 'none';
-    document.getElementById('submitSuccess').classList.add('show');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    const formData = new FormData(event.target);
+    const data = Object.fromEntries(formData.entries());
 
-  } catch (e) {
-    console.error("Error adding document: ", e);
+    // Injecting star configurations into data packet
+    data.rating_overall = window.ratings?.overall || 5;
+    data.rating_landlord = window.ratings?.landlord || 5;
+    data.rating_condition = window.ratings?.condition || 5;
+
+    try {
+      await addDoc(collection(db, 'Reviews'), {
+        ...data,
+        timestamp: new Date()
+      });
+      
+      document.getElementById('reviewForm').style.display = 'none';
+      document.getElementById('submitSuccess').classList.add('show');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    } catch (e) {
+      console.error("Error adding document: ", e);
+      alert("Submission error. Check console data permissions.");
+    }
   }
-}</script>
+</script>
 </body>
 </html>
