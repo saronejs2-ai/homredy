@@ -195,6 +195,10 @@
       transition: color 0.1s; user-select: none;
     }
     .star-input input { display: none; }
+    .star-input label:hover,
+    .star-input label:hover ~ label { color: var(--gray-200); }
+    .star-row:hover .star-input label { color: #F59E0B; }
+    .star-input label:hover ~ label { color: var(--gray-200) !important; }
 
     .checkbox-group { display: flex; align-items: flex-start; gap: 10px; }
     .checkbox-group input { margin-top: 3px; accent-color: var(--navy); width: 16px; height: 16px; }
@@ -511,6 +515,7 @@
 </head>
 <body>
 
+<!-- NAV -->
 <nav>
   <div class="nav-inner">
     <a class="logo" onclick="showPage('home')">Homr<span>edy</span></a>
@@ -538,8 +543,10 @@
   <button class="nav-cta" onclick="showPage('submit');toggleMenu()">Submit a Review →</button>
 </div>
 
+<!-- ════════════════════════════════ HOME ════════════════════════════════ -->
 <div class="page active" id="page-home">
 
+  <!-- Hero -->
   <section class="hero">
     <div class="container">
       <div class="hero-grid">
@@ -604,12 +611,14 @@
     </div>
   </section>
 
+  <!-- Disclaimer -->
   <div class="container" style="padding-top: 24px;">
     <div class="disclaimer">
       <strong>Disclaimer:</strong> Reviews represent the opinions and experiences of individual tenants. Homredy does not independently verify every statement submitted and reserves the right to remove content that violates its policies.
     </div>
   </div>
 
+  <!-- How it works -->
   <section class="section">
     <div class="container">
       <p class="section-label">How it works</p>
@@ -639,6 +648,7 @@
 
   <div class="divider"></div>
 
+  <!-- Why tenant reviews matter -->
   <section class="section">
     <div class="container">
       <div class="why-grid">
@@ -684,6 +694,7 @@
 
   <div class="divider"></div>
 
+  <!-- Featured Reviews -->
   <section class="section">
     <div class="container">
       <div style="display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 16px;">
@@ -755,6 +766,9 @@
     </div>
   </section>
 
+  <div class="divider"></div>
+
+  <!-- FAQ -->
   <section class="section">
     <div class="container">
       <div style="max-width: 720px; margin: 0 auto;">
@@ -770,7 +784,7 @@
           </div>
           <div class="faq-item">
             <button class="faq-q" onclick="toggleFaq(this)">
-              How are reviews verified?
+              How are reviews moderated?
               <span class="faq-icon">+</span>
             </button>
             <div class="faq-a"><p>All reviews are manually moderated before being published. Our team checks each submission against our Review Guidelines to ensure content is factual, relevant, and free from abusive language. Supporting documents may be requested or reviewed to improve trust and moderation quality. We do not publish reviews automatically.</p></div>
@@ -808,6 +822,7 @@
     </div>
   </section>
 
+  <!-- Trust CTA -->
   <div class="container section-sm">
     <div class="trust-section">
       <p class="section-label" style="color: var(--sage-light);">Built for renters</p>
@@ -838,7 +853,9 @@
   </div>
 
 </div>
+<!-- end HOME -->
 
+<!-- ════════════════════════════════ BROWSE ════════════════════════════════ -->
 <div class="page" id="page-browse">
   <div class="page-hero">
     <div class="container">
@@ -853,6 +870,7 @@
       Reviews represent the opinions and experiences of individual tenants. Homredy does not independently verify every statement submitted and reserves the right to remove content that violates its policies.
     </div>
 
+    <!-- Search bar -->
     <div class="search-bar">
       <input class="form-input" type="text" placeholder="🔍  Search by property name..." id="searchProp" oninput="filterReviews()" />
       <input class="form-input" type="text" placeholder="🏙  City" id="searchCity" oninput="filterReviews()" />
@@ -876,6 +894,7 @@
     </div>
 
     <div class="browse-grid" id="browseGrid">
+      <!-- Cards injected by JS -->
     </div>
 
     <div style="text-align:center; margin-top:48px; padding: 40px; background: var(--white); border-radius: var(--radius); border: 1px solid var(--gray-200);">
@@ -886,7 +905,9 @@
     </div>
   </div>
 </div>
+<!-- end BROWSE -->
 
+<!-- ════════════════════════════════ SUBMIT ════════════════════════════════ -->
 <div class="page" id="page-submit">
   <div class="page-hero">
     <div class="container">
@@ -903,6 +924,7 @@
 
     <div class="submit-layout">
       <div>
+        <!-- Success state -->
         <div class="success-box" id="submitSuccess">
           <div class="icon">✅</div>
           <h3>Review submitted!</h3>
@@ -910,6 +932,7 @@
         </div>
 
         <form class="review-form" id="reviewForm" onsubmit="window.submitReview(event)">
+          <!-- Property Info -->
           <div>
             <div class="form-section-title">Property Information</div>
           </div>
@@ -941,6 +964,7 @@
             </div>
           </div>
 
+          <!-- Ratings -->
           <div>
             <div class="form-section-title">Your Ratings</div>
           </div>
@@ -977,6 +1001,7 @@
             </div>
           </div>
 
+          <!-- Deposit -->
           <div>
             <div class="form-section-title">Security Deposit Experience</div>
           </div>
@@ -991,6 +1016,7 @@
             </div>
           </div>
 
+          <!-- Recommend -->
           <div class="form-group">
             <label class="form-label">Would you recommend this property to others?</label>
             <div class="radio-pills" style="margin-top: 6px;">
@@ -1000,6 +1026,7 @@
             </div>
           </div>
 
+          <!-- Rent again -->
           <div class="form-group">
             <label class="form-label">Would you rent here again?</label>
             <div class="radio-pills" style="margin-top: 6px;">
@@ -1009,6 +1036,7 @@
             </div>
           </div>
 
+          <!-- Written review -->
           <div>
             <div class="form-section-title">Your Written Review</div>
           </div>
@@ -1018,8 +1046,9 @@
             <div class="form-hint">Minimum 100 characters. Be factual and based on your personal experience.</div>
           </div>
 
+          <!-- Contact -->
           <div>
-            <div class="form-section-title">Contact &amp; Verification</div>
+            <div class="form-section-title">Contact & Verification</div>
           </div>
           <div class="form-group">
             <label class="form-label">Email Address <span>*</span></label>
@@ -1032,6 +1061,7 @@
             <div class="form-hint">You may upload a rental agreement, notice, or other document. Max 5 MB. Not required.</div>
           </div>
 
+          <!-- Consent -->
           <div class="checkbox-group">
             <input type="checkbox" id="consent" required />
             <label for="consent">I confirm that this review is based on my personal rental experience, is factual to the best of my knowledge, and I have read and agree to the <button type="button" style="background:none;border:none;color:var(--navy);text-decoration:underline;cursor:pointer;font-family:inherit;font-size:14px;" onclick="showPage('guidelines')">Review Guidelines</button> and <button type="button" style="background:none;border:none;color:var(--navy);text-decoration:underline;cursor:pointer;font-family:inherit;font-size:14px;" onclick="showPage('terms')">Terms of Service</button>.</label>
@@ -1045,6 +1075,7 @@
         </form>
       </div>
 
+      <!-- Sidebar -->
       <div class="sidebar-tips">
         <div class="tip-card">
           <h4>✏️ Tips for a great review</h4>
@@ -1068,7 +1099,9 @@
     </div>
   </div>
 </div>
+<!-- end SUBMIT -->
 
+<!-- ════════════════════════════════ ABOUT ════════════════════════════════ -->
 <div class="page" id="page-about">
   <section class="section-sm">
     <div class="about-hero">
@@ -1156,7 +1189,9 @@
     </div>
   </section>
 </div>
+<!-- end ABOUT -->
 
+<!-- ════════════════════════════════ CONTACT ════════════════════════════════ -->
 <div class="page" id="page-contact">
   <div class="page-hero">
     <div class="container">
@@ -1205,6 +1240,7 @@
           <button type="submit" class="btn-primary" style="width: 100%; justify-content: center; padding: 14px;">Send Message →</button>
         </form>
       </div>
+
       <div>
         <h3 style="margin-bottom: 24px;">Other ways to reach us</h3>
         <div class="contact-info-item">
@@ -1233,13 +1269,15 @@
         </div>
         <div class="card" style="margin-top: 8px;">
           <h4 style="margin-bottom: 8px;">⏱ Response times</h4>
-          <p style="font-size: 13px; line-height: 1.8;">General queries: 2–3 business days<br>Review reports: 5–7 business days<br>Privacy requests: Within 30 days</p>
+          <p style="font-size: 13px; line-height: 1.8;">General queries: 2–3 business days<br>Review reports and content complaints: Acknowledged within 24 hours, resolved within 15 days<br>Privacy requests: Within 30 days</p>
         </div>
       </div>
     </div>
   </div>
 </div>
+<!-- end CONTACT -->
 
+<!-- ════════════════════════════════ GUIDELINES ════════════════════════════════ -->
 <div class="page" id="page-guidelines">
   <div class="legal-hero">
     <div class="container">
@@ -1248,6 +1286,7 @@
       <p>Our standards for honest, helpful, and fair tenant reviews.</p>
     </div>
   </div>
+
   <div class="container section-sm">
     <div class="legal-content">
       <p>Homredy is a community-powered platform. The value of every review depends on its honesty, accuracy, and fairness. These guidelines exist to maintain trust for everyone who uses Homredy — including you.</p>
@@ -1318,7 +1357,9 @@
     </div>
   </div>
 </div>
+<!-- end GUIDELINES -->
 
+<!-- ════════════════════════════════ PRIVACY ════════════════════════════════ -->
 <div class="page" id="page-privacy">
   <div class="legal-hero">
     <div class="container">
@@ -1399,7 +1440,9 @@
     </div>
   </div>
 </div>
+<!-- end PRIVACY -->
 
+<!-- ════════════════════════════════ TERMS ════════════════════════════════ -->
 <div class="page" id="page-terms">
   <div class="legal-hero">
     <div class="container">
@@ -1463,21 +1506,35 @@
         <li>Any conduct harmful to the Platform or its community</li>
       </ul>
 
-      <h2>9. Intellectual Property</h2>
+      <h2>9. Grievance Officer and Intermediary Status</h2>
+      <p>Homredy operates as an intermediary under the Information Technology Act, 2000 and the Information Technology (Intermediary Guidelines and Digital Media Ethics Code) Rules, 2021 ("IT Rules"). We host user-generated content (reviews) and do not author, edit the substance of, or independently verify that content. We comply with the due diligence requirements under the IT Rules, including publishing these Terms and our Review Guidelines, responding to lawful requests from government and law enforcement authorities, and operating the grievance redressal mechanism described below.</p>
+      <p>In accordance with Rule 3(2) of the IT Rules, we have appointed a Grievance Officer to address complaints regarding content published on the Platform.</p>
+      <ul>
+        <li><strong>Grievance Officer:</strong> [Name to be designated]</li>
+        <li><strong>Email:</strong> moderation@homredy.com</li>
+        <li><strong>Acknowledgement:</strong> Complaints will be acknowledged within 24 hours of receipt.</li>
+        <li><strong>Resolution:</strong> Complaints will be disposed of within 15 days of receipt, or within the timeframe prescribed by applicable law, whichever is shorter. Complaints relating to content that may depict a user in a sexual or otherwise non-consensual manner will be actioned within 24 hours of receipt.</li>
+      </ul>
+      <p>If you believe a review contains false allegations, defamatory content, discriminatory content, or violates our Review Guidelines, you may submit a complaint to the Grievance Officer with the specific URL or review identifier, the basis for your complaint, and your contact details. We will assess the complaint against our Review Guidelines and applicable law, and may request additional information before making a decision. We reserve the right to remove, restrict, or retain content pending review, and our decision on a complaint is final.</p>
+      <p>Nothing in this section obligates Homredy to proactively monitor content beyond the moderation process described in our Review Guidelines, except as required by applicable law or a valid order from a competent court or government authority.</p>
+
+      <h2>10. Intellectual Property</h2>
       <p>All Platform design, code, branding, logos, and non-user-generated content are the property of Homredy and are protected by applicable intellectual property laws. You may not reproduce or use Platform materials without prior written consent.</p>
 
-      <h2>10. Dispute Resolution</h2>
+      <h2>11. Dispute Resolution</h2>
       <p>Any disputes arising from these Terms or your use of the Platform shall first be attempted to be resolved through good-faith negotiation. If unresolved within 30 days, disputes shall be subject to the exclusive jurisdiction of the courts in Bengaluru, Karnataka, India. These Terms are governed by the laws of India.</p>
 
-      <h2>11. Changes to Terms</h2>
+      <h2>12. Changes to Terms</h2>
       <p>We may revise these Terms at any time. Updated Terms will be posted on the Platform with a revised date. Continued use of the Platform after changes constitutes acceptance.</p>
 
-      <h2>12. Contact</h2>
-      <p>For legal queries: <strong>hello@homredy.com</strong></p>
+      <h2>13. Contact</h2>
+      <p>For legal queries: <strong>hello@homredy.com</strong><br>For content complaints and grievances: <strong>moderation@homredy.com</strong></p>
     </div>
   </div>
 </div>
+<!-- end TERMS -->
 
+<!-- ════════════════════════════════ COOKIES ════════════════════════════════ -->
 <div class="page" id="page-cookies">
   <div class="legal-hero">
     <div class="container">
@@ -1534,7 +1591,9 @@
     </div>
   </div>
 </div>
+<!-- end COOKIES -->
 
+<!-- ════════════════════════════════ FOOTER ════════════════════════════════ -->
 <footer>
   <div class="container">
     <div class="footer-grid">
@@ -1576,6 +1635,7 @@
   </div>
 </footer>
 
+<!-- Cookie Banner -->
 <div class="cookie-banner" id="cookieBanner">
   <p>We use essential and analytics cookies to improve your experience. Read our <button style="background:none;border:none;color:var(--navy);text-decoration:underline;cursor:pointer;font-family:inherit;font-size:13px;" onclick="showPage('cookies')">Cookie Policy</button>.</p>
   <div class="cookie-actions">
@@ -1612,7 +1672,8 @@
   }
 
   // ── Star rating picker ──
-  const ratings = { overall: 5, landlord: 5, condition: 5 };
+  // Defaults start at 0 (unselected), never a fake pre-filled rating.
+  const ratings = { overall: 0, landlord: 0, condition: 0 };
   function setRating(name, val) {
     ratings[name] = val;
     const container = document.getElementById('stars-' + name);
@@ -1643,7 +1704,7 @@
     document.getElementById('cookieBanner').classList.add('hidden');
   }
 
-  // ── Browse reviews: in-memory cache + filtering ──
+  // ── Browse reviews: populated from Firestore at runtime ──
   let reviewsData = [];
 
   function starsHTML(n) {
@@ -1708,7 +1769,10 @@
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-app.js";
   import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-analytics.js";
-  import { getFirestore, collection, addDoc, getDocs, query, orderBy } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-firestore.js";
+  import {
+    getFirestore, collection, addDoc, getDocs,
+    query, orderBy, serverTimestamp
+  } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-firestore.js";
 
   const firebaseConfig = {
     apiKey: "AIzaSyC_sF4yTR_BImsRynqvfmoEydjxMIrrIkM",
@@ -1723,20 +1787,29 @@
   const app = initializeApp(firebaseConfig);
   const db = getFirestore(app);
 
-  // Submit a new review to Firestore
+  // Submit a new review to Firestore.
   window.submitReview = async function (event) {
     event.preventDefault();
+
+    if (!ratings.overall || ratings.overall < 1) {
+      alert("Please select an overall rating before submitting.");
+      return;
+    }
+
     const formData = new FormData(event.target);
     const data = Object.fromEntries(formData.entries());
 
-    data.rating_overall = Number(ratings.overall || 5);
-    data.rating_landlord = Number(ratings.landlord || 5);
-    data.rating_condition = Number(ratings.condition || 5);
+    data.rating_overall = Number(ratings.overall);
+    data.rating_landlord = Number(ratings.landlord);
+    data.rating_condition = Number(ratings.condition);
 
     try {
-      await addDoc(collection(db, 'Reviews'), { ...data, timestamp: new Date() });
+      // serverTimestamp() is required — it must match Firestore's
+      // security rule that rejects client-supplied timestamps.
+      await addDoc(collection(db, 'Reviews'), { ...data, timestamp: serverTimestamp() });
       document.getElementById('reviewForm').style.display = 'none';
       document.getElementById('submitSuccess').classList.add('show');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
       window.fetchAndRenderReviews();
     } catch (e) {
       console.error(e);
@@ -1744,7 +1817,7 @@
     }
   };
 
-  // Fetch reviews from Firestore and render them
+  // Fetch published reviews from Firestore and render them on Browse.
   window.fetchAndRenderReviews = async function () {
     try {
       const q = query(collection(db, "Reviews"), orderBy("timestamp", "desc"));
@@ -1752,10 +1825,10 @@
       const reviews = snapshot.docs.map(doc => {
         const d = doc.data();
         return {
-          property: d.property || "Unknown",
+          property: d.property || "Unknown property",
           city: d.city || "",
           locality: d.locality || "",
-          rating: d.rating_overall || 5,
+          rating: d.rating_overall != null ? d.rating_overall : 0,
           text: d.text || "",
           stay: d.stay_duration || "",
           date: "Recent",
@@ -1771,9 +1844,8 @@
     }
   };
 
-  // Initial load
+  // Initial load.
   window.fetchAndRenderReviews();
 </script>
-
 </body>
 </html>
