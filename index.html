@@ -294,6 +294,7 @@
       cursor: pointer; display: flex; flex-direction: column; gap: 14px;
     }
     .review-card:hover { box-shadow: var(--shadow); border-color: var(--sage-light); }
+    .reviews-grid-static .review-card { cursor: default; }
     .rc-top { display: flex; justify-content: space-between; align-items: flex-start; }
     .rc-property { font-size: 15px; font-weight: 700; color: var(--navy); }
     .rc-location { font-size: 13px; color: var(--gray-400); margin-top: 2px; }
@@ -303,6 +304,24 @@
     .rc-footer { display: flex; justify-content: space-between; align-items: center; margin-top: 4px; }
     .rc-meta { font-size: 12px; color: var(--gray-400); }
     .rc-badges { display: flex; gap: 6px; flex-wrap: wrap; }
+
+    /* ── Card sub-rating indicators ── */
+    .rc-indicators {
+      display: flex; flex-wrap: wrap; gap: 8px;
+      padding-top: 10px; border-top: 1px solid var(--gray-100);
+    }
+    .rc-indicator {
+      display: flex; align-items: center; gap: 5px;
+    }
+    .rc-indicator-label {
+      font-size: 11px; color: var(--gray-400); white-space: nowrap;
+    }
+    .rc-indicator .stars span { font-size: 11px; }
+    .rc-deposit-pill {
+      font-size: 11px; font-weight: 500;
+      padding: 3px 9px; border-radius: 100px;
+      white-space: nowrap;
+    }
 
     /* FAQ */
     .faq-list { display: flex; flex-direction: column; gap: 2px; margin-top: 40px; }
@@ -476,6 +495,75 @@
     .success-box .icon { font-size: 48px; margin-bottom: 12px; }
     .success-box h3 { color: #15803D; margin-bottom: 8px; }
     .success-box p { color: #166534; font-size: 14px; }
+
+    /* ── REVIEW DETAIL MODAL ── */
+    .modal-overlay {
+      display: none; position: fixed; inset: 0; z-index: 300;
+      background: rgba(17, 24, 39, 0.55);
+      align-items: center; justify-content: center; padding: 24px;
+      overflow-y: auto;
+    }
+    .modal-overlay.open { display: flex; }
+    .modal-card {
+      background: var(--white); border-radius: var(--radius);
+      max-width: 560px; width: 100%; max-height: 88vh; overflow-y: auto;
+      padding: 32px; position: relative; box-shadow: var(--shadow-lg);
+      animation: modal-pop 0.18s ease-out;
+    }
+    @keyframes modal-pop {
+      from { transform: translateY(8px) scale(0.98); opacity: 0; }
+      to { transform: translateY(0) scale(1); opacity: 1; }
+    }
+    .modal-close {
+      position: absolute; top: 18px; right: 18px;
+      width: 32px; height: 32px; border-radius: 50%;
+      background: var(--gray-100); border: none; cursor: pointer;
+      font-size: 20px; color: var(--gray-500); line-height: 1;
+      display: flex; align-items: center; justify-content: center;
+      transition: background 0.2s;
+    }
+    .modal-close:hover { background: var(--gray-200); color: var(--navy); }
+    .modal-header { padding-right: 36px; margin-bottom: 4px; }
+    .modal-property { font-size: 20px; font-weight: 700; color: var(--navy); }
+    .modal-location { font-size: 14px; color: var(--gray-400); margin-top: 4px; }
+    .modal-overall {
+      display: flex; align-items: center; gap: 10px; margin-top: 18px;
+      padding: 16px; background: var(--gray-50); border-radius: var(--radius-sm);
+    }
+    .modal-overall .stars span { font-size: 18px; }
+    .modal-overall .score { font-size: 18px; font-weight: 700; color: var(--navy); }
+    .modal-overall .label { font-size: 13px; color: var(--gray-500); margin-left: auto; }
+    .modal-subratings {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 16px;
+    }
+    .modal-subrating {
+      border: 1px solid var(--gray-200); border-radius: var(--radius-sm);
+      padding: 12px 14px;
+    }
+    .modal-subrating .sr-label { font-size: 12px; color: var(--gray-400); margin-bottom: 6px; }
+    .modal-subrating .sr-stars span { font-size: 14px; }
+    .modal-subrating .sr-na { font-size: 13px; color: var(--gray-400); font-style: italic; }
+    .modal-facts {
+      display: flex; flex-wrap: wrap; gap: 10px; margin-top: 16px;
+    }
+    .modal-fact {
+      font-size: 13px; padding: 6px 12px; border-radius: 100px;
+      background: var(--gray-100); color: var(--gray-700);
+    }
+    .modal-fact.positive { background: #EFF4EB; color: var(--sage-dark); }
+    .modal-fact.negative { background: #FEF2F2; color: #B91C1C; }
+    .modal-fact.neutral { background: #FFF8E7; color: #92400E; }
+    .modal-divider { height: 1px; background: var(--gray-200); margin: 20px 0; }
+    .modal-section-label {
+      font-size: 12px; font-weight: 700; color: var(--sage-dark);
+      text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px;
+    }
+    .modal-text { font-size: 15px; color: var(--gray-700); line-height: 1.7; }
+    .modal-stay { font-size: 13px; color: var(--gray-400); margin-top: 16px; }
+    @media (max-width: 600px) {
+      .modal-subratings { grid-template-columns: 1fr; }
+      .modal-card { padding: 24px; max-height: 92vh; }
+    }
 
     /* ── PAGE HEADER ── */
     .page-hero { background: var(--white); padding: 48px 0; border-bottom: 1px solid var(--gray-200); }
@@ -704,7 +792,7 @@
         </div>
         <button class="btn-secondary" onclick="showPage('browse')">See all reviews →</button>
       </div>
-      <div class="reviews-grid" style="margin-top: 32px;">
+      <div class="reviews-grid reviews-grid-static" style="margin-top: 32px;">
         <div class="review-card">
           <div class="rc-top">
             <div>
@@ -1644,6 +1732,14 @@
   </div>
 </div>
 
+<!-- Review Detail Modal -->
+<div class="modal-overlay" id="reviewModalOverlay" onclick="closeReviewDetail(event)">
+  <div class="modal-card" id="reviewModalCard">
+    <button class="modal-close" onclick="closeReviewDetail(event)" aria-label="Close">×</button>
+    <div id="reviewModalContent"><!-- populated by openReviewDetail --></div>
+  </div>
+</div>
+
 <script>
   // ── Page routing ──
   function showPage(name) {
@@ -1719,6 +1815,17 @@
     return `<span class="badge ${cls}" style="${style}">${b.label}</span>`;
   }
 
+  function depositLabel(val) {
+    const map = {
+      full_return: { text: 'Deposit returned', color: '#166534', bg: '#F0FDF4' },
+      delayed:     { text: 'Deposit delayed',  color: '#92400E', bg: '#FFF8E7' },
+      partial:     { text: 'Partial return',   color: '#92400E', bg: '#FFF8E7' },
+      not_returned:{ text: 'Deposit not returned', color: '#B91C1C', bg: '#FEF2F2' },
+      still_tenant:{ text: 'Still living there', color: '#1D3C5A', bg: '#E8EEF4' }
+    };
+    return map[val] || null;
+  }
+
   function renderBrowse(data) {
     const grid = document.getElementById('browseGrid');
     if (!grid) return;
@@ -1730,25 +1837,42 @@
       return;
     }
 
-    grid.innerHTML = data.map(r => `
-      <div class="review-card">
-        <div class="rc-top">
-          <div>
-            <div class="rc-property">${r.property}</div>
-            <div class="rc-location">📍 ${r.locality}, ${r.city}</div>
+    grid.innerHTML = data.map(r => {
+      // Build sub-rating indicators — only show if value was submitted
+      const subRatings = [
+        r.ratingLandlord ? `<span class="rc-indicator"><span class="rc-indicator-label">💬 Landlord</span><span class="stars">${starsHTML(r.ratingLandlord)}</span></span>` : '',
+        r.ratingCondition ? `<span class="rc-indicator"><span class="rc-indicator-label">🏠 Condition</span><span class="stars">${starsHTML(r.ratingCondition)}</span></span>` : ''
+      ].filter(Boolean).join('');
+
+      // Deposit pill — only show if submitted
+      const dep = depositLabel(r.deposit);
+      const depositPill = dep ? `<span class="rc-deposit-pill" style="background:${dep.bg};color:${dep.color};">💰 ${dep.text}</span>` : '';
+
+      return `
+        <div class="review-card" onclick="openReviewDetail('${r.id}')">
+          <div class="rc-top">
+            <div>
+              <div class="rc-property">${r.property}</div>
+              <div class="rc-location">📍 ${r.locality}, ${r.city}</div>
+            </div>
+            <div class="rc-rating">
+              <div class="stars">${starsHTML(r.rating)}</div>
+              <div class="rc-score">${r.rating}.0</div>
+            </div>
           </div>
-          <div class="rc-rating">
-            <div class="stars">${starsHTML(r.rating)}</div>
-            <div class="rc-score">${r.rating}.0</div>
+          <div class="rc-text">${r.text}</div>
+          ${subRatings || depositPill ? `
+          <div class="rc-indicators">
+            ${subRatings}
+            ${depositPill}
+          </div>` : ''}
+          <div class="rc-footer">
+            <div class="rc-meta">Stayed ${r.stay} · ${r.date}</div>
+            <div class="rc-badges">${r.badges ? r.badges.map(badgeHTML).join('') : ''}</div>
           </div>
         </div>
-        <div class="rc-text">${r.text}</div>
-        <div class="rc-footer">
-          <div class="rc-meta">Stayed ${r.stay} · ${r.date}</div>
-          <div class="rc-badges">${r.badges ? r.badges.map(badgeHTML).join('') : ''}</div>
-        </div>
-      </div>
-    `).join('');
+      `;
+    }).join('');
   }
 
   function filterReviews() {
@@ -1764,6 +1888,105 @@
     );
     renderBrowse(filtered);
   }
+
+  // ── Review detail modal ──
+  const DEPOSIT_LABELS = {
+    full_return: { text: '✅ Deposit: Full return, on time', sentiment: 'positive' },
+    delayed: { text: '⏳ Deposit: Returned late', sentiment: 'neutral' },
+    partial: { text: '⚠️ Deposit: Partial return', sentiment: 'negative' },
+    not_returned: { text: '❌ Deposit: Not returned', sentiment: 'negative' },
+    still_tenant: { text: '🏠 Deposit: Still living there', sentiment: 'neutral' }
+  };
+  const RECOMMEND_LABELS = {
+    yes: { text: '👍 Would recommend', sentiment: 'positive' },
+    maybe: { text: '🤔 Might recommend', sentiment: 'neutral' },
+    no: { text: '👎 Would not recommend', sentiment: 'negative' }
+  };
+  const RENT_AGAIN_LABELS = {
+    yes: { text: '✅ Would rent here again', sentiment: 'positive' },
+    not_sure: { text: '🤷 Not sure they would rent again', sentiment: 'neutral' },
+    no: { text: '❌ Would not rent here again', sentiment: 'negative' }
+  };
+
+  function subratingHTML(label, value) {
+    if (value === null || value === undefined) {
+      return `
+        <div class="modal-subrating">
+          <div class="sr-label">${label}</div>
+          <div class="sr-na">Not rated</div>
+        </div>`;
+    }
+    return `
+      <div class="modal-subrating">
+        <div class="sr-label">${label}</div>
+        <div class="sr-stars stars">${starsHTML(value)}</div>
+      </div>`;
+  }
+
+  function factPill(map, key) {
+    if (!key || !map[key]) return '';
+    const f = map[key];
+    return `<span class="modal-fact ${f.sentiment}">${f.text}</span>`;
+  }
+
+  window.openReviewDetail = function (id) {
+    const review = reviewsData.find(r => r.id === id);
+    if (!review) return;
+
+    const facts = [
+      factPill(DEPOSIT_LABELS, review.deposit),
+      factPill(RECOMMEND_LABELS, review.recommend),
+      factPill(RENT_AGAIN_LABELS, review.rentAgain)
+    ].filter(Boolean).join('');
+
+    const content = `
+      <div class="modal-header">
+        <div class="modal-property">${review.property}</div>
+        <div class="modal-location">📍 ${review.locality}, ${review.city}</div>
+      </div>
+
+      <div class="modal-overall">
+        <div class="stars">${starsHTML(review.rating)}</div>
+        <div class="score">${review.rating}.0</div>
+        <div class="label">Overall experience</div>
+      </div>
+
+      <div class="modal-subratings">
+        ${subratingHTML('Landlord communication', review.ratingLandlord)}
+        ${subratingHTML('Property condition', review.ratingCondition)}
+      </div>
+
+      ${facts ? `<div class="modal-facts">${facts}</div>` : ''}
+
+      <div class="modal-divider"></div>
+
+      <div class="modal-section-label">Full review</div>
+      <p class="modal-text">${review.text}</p>
+
+      <div class="modal-stay">Stayed ${review.stay || 'an unspecified period'} · ${review.date}</div>
+    `;
+
+    document.getElementById('reviewModalContent').innerHTML = content;
+    document.getElementById('reviewModalOverlay').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  };
+
+  window.closeReviewDetail = function (event) {
+    // Only close if the click was on the overlay itself or the close
+    // button, not on content inside the card.
+    if (event && event.target.id !== 'reviewModalOverlay' && !event.target.classList.contains('modal-close')) {
+      return;
+    }
+    document.getElementById('reviewModalOverlay').classList.remove('open');
+    document.body.style.overflow = '';
+  };
+
+  // Allow closing the modal with the Escape key.
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      window.closeReviewDetail();
+    }
+  });
 </script>
 
 <script type="module">
@@ -1825,10 +2048,16 @@
       const reviews = snapshot.docs.map(doc => {
         const d = doc.data();
         return {
+          id: doc.id,
           property: d.property || "Unknown property",
           city: d.city || "",
           locality: d.locality || "",
           rating: d.rating_overall != null ? d.rating_overall : 0,
+          ratingLandlord: d.rating_landlord != null ? d.rating_landlord : null,
+          ratingCondition: d.rating_condition != null ? d.rating_condition : null,
+          deposit: d.deposit || null,
+          recommend: d.recommend || null,
+          rentAgain: d.rent_again || null,
           text: d.text || "",
           stay: d.stay_duration || "",
           date: "Recent",
