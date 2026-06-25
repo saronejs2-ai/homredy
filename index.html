@@ -362,6 +362,154 @@
     }
     .search-bar .form-input { flex: 1; min-width: 160px; }
     .search-bar .form-select { min-width: 140px; }
+
+    .city-pill {
+      flex: 0 0 auto; padding: 8px 16px;
+      border-radius: 100px; border: 1.5px solid var(--gray-200);
+      background: var(--white); font-size: 13px; font-weight: 500;
+      color: var(--gray-700); cursor: pointer; white-space: nowrap;
+      transition: all 0.15s;
+    }
+    .city-pill:hover { border-color: var(--navy); color: var(--navy); background: #E8EEF4; }
+    .city-pill.active { border-color: var(--navy); background: var(--navy); color: var(--white); }
+    .city-pill-clear { border-color: var(--gray-200); color: var(--gray-400); }
+    .city-pill-clear:hover { border-color: #EF4444; color: #EF4444; background: #FEF2F2; }
+
+
+    .city-scroll-row { position: relative; }
+    .city-scroll {
+      display: flex; gap: 14px;
+      overflow-x: auto; padding: 4px 2px 16px;
+      scrollbar-width: none; -ms-overflow-style: none;
+    }
+    .city-scroll::-webkit-scrollbar { display: none; }
+    .city-card {
+      flex: 0 0 160px; border-radius: var(--radius);
+      overflow: hidden; cursor: pointer;
+      border: 1px solid var(--gray-200);
+      background: var(--white);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .city-card:hover { transform: translateY(-4px); box-shadow: var(--shadow); }
+    .city-img-wrap { overflow: hidden; }
+    .city-img {
+      width: 160px; height: 110px;
+      object-fit: cover; display: block;
+      transition: transform 0.3s;
+    }
+    .city-card:hover .city-img { transform: scale(1.06); }
+    .city-img-fallback {
+      width: 160px; height: 110px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 32px;
+    }
+    .city-label { padding: 10px 12px 12px; }
+    .city-name {
+      font-size: 14px; font-weight: 700;
+      color: var(--navy); margin: 0;
+    }
+    .city-state {
+      font-size: 12px; color: var(--gray-400);
+      margin: 3px 0 0;
+    }
+    @media (max-width: 600px) {
+      .city-card { flex: 0 0 140px; }
+      .city-img, .city-img-fallback { width: 140px; height: 96px; }
+    }
+
+    /* ── Cities row (above How it works) ── */
+    .cities-row {
+      display: flex; gap: 16px;
+      overflow-x: auto; padding: 4px 2px 8px;
+      scrollbar-width: none; -ms-overflow-style: none;
+    }
+    .cities-row::-webkit-scrollbar { display: none; }
+    .cities-city-card {
+      flex: 0 0 200px; cursor: pointer;
+      border-radius: var(--radius); overflow: hidden;
+      border: 1px solid var(--gray-200); background: var(--white);
+      transition: box-shadow 0.2s, transform 0.2s;
+    }
+    .cities-city-card:hover { box-shadow: var(--shadow); transform: translateY(-2px); }
+    .cities-img-wrap { width: 100%; }
+    .cities-img-placeholder {
+      width: 100%; height: 130px;
+      display: flex; align-items: flex-end; justify-content: center;
+      overflow: hidden;
+    }
+    .cities-label { padding: 12px 14px 14px; }
+    .cities-name { font-size: 15px; font-weight: 700; color: var(--navy); margin: 0; }
+    .cities-sub { font-size: 12px; color: var(--gray-400); margin: 4px 0 0; }
+    @media (max-width: 600px) {
+      .cities-city-card { flex: 0 0 160px; }
+      .cities-img-placeholder { height: 106px; }
+    }
+
+
+    .city-netflix-scroll {
+      display: flex; gap: 12px;
+      overflow-x: auto; padding: 4px 2px 14px;
+      scrollbar-width: none; -ms-overflow-style: none;
+    }
+    .city-netflix-scroll::-webkit-scrollbar { display: none; }
+    .city-netflix-card {
+      flex: 0 0 140px; height: 100px;
+      border-radius: var(--radius); cursor: pointer;
+      position: relative; overflow: hidden;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .city-netflix-card:hover {
+      transform: scale(1.05);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.25);
+    }
+    .city-netflix-card.active { outline: 2.5px solid var(--white); outline-offset: 2px; }
+    .cnc-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.5) 0%, transparent 60%);
+    }
+    .cnc-content {
+      position: absolute; inset: 0;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center; gap: 4px;
+    }
+    .cnc-icon { font-size: 26px; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3)); }
+    .cnc-name {
+      font-size: 13px; font-weight: 700; color: #fff;
+      text-align: center; text-shadow: 0 1px 4px rgba(0,0,0,0.5);
+    }
+    .cnc-state { font-size: 10px; color: rgba(255,255,255,0.75); text-shadow: 0 1px 3px rgba(0,0,0,0.5); }
+    @media (max-width: 600px) {
+      .city-netflix-card { flex: 0 0 118px; height: 84px; }
+      .cnc-icon { font-size: 20px; }
+      .cnc-name { font-size: 11px; }
+    }
+
+
+      flex: 1; min-width: 160px; position: relative;
+    }
+    .autocomplete-wrap .form-input { width: 100%; }
+    .autocomplete-dropdown {
+      display: none; position: absolute; top: calc(100% + 4px); left: 0; right: 0;
+      background: var(--white); border: 1.5px solid var(--navy);
+      border-radius: var(--radius-sm); z-index: 50;
+      max-height: 220px; overflow-y: auto;
+      box-shadow: var(--shadow);
+    }
+    .autocomplete-dropdown.open { display: block; }
+    .ac-item {
+      padding: 10px 14px; font-size: 14px; color: var(--gray-700);
+      cursor: pointer; border-bottom: 1px solid var(--gray-100);
+      transition: background 0.15s;
+    }
+    .ac-item:last-child { border-bottom: none; }
+    .ac-item:hover, .ac-item.active { background: var(--gray-50); color: var(--navy); }
+    .ac-item mark {
+      background: none; color: var(--navy); font-weight: 700;
+    }
+    .ac-empty {
+      padding: 12px 14px; font-size: 13px; color: var(--gray-400);
+      font-style: italic;
+    }
     .browse-results-header {
       display: flex; justify-content: space-between; align-items: center;
       margin: 32px 0 16px;
@@ -706,6 +854,129 @@
     </div>
   </div>
 
+  <!-- Cities section -->
+  <section class="section" style="padding-bottom: 0;">
+    <div class="container">
+      <p class="section-label">Cities</p>
+      <h2>Browse reviews across India's major rental cities.</h2>
+      <p style="margin-top: 10px; font-size: 15px; color: var(--gray-400);">Starting with India's largest rental markets. More cities coming as reviews grow.</p>
+      <div class="cities-row" style="margin-top: 32px;">
+
+        <div class="cities-city-card" onclick="goToCity('bengaluru')">
+          <div class="cities-img-wrap">
+            <div class="cities-img-placeholder" style="background: linear-gradient(160deg,#b8cfe0 0%,#7fa8c4 100%);">
+              <svg viewBox="0 0 160 110" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;opacity:0.35;">
+                <rect x="10" y="60" width="20" height="50" fill="#1D3C5A"/>
+                <rect x="35" y="40" width="25" height="70" fill="#1D3C5A"/>
+                <rect x="65" y="50" width="18" height="60" fill="#1D3C5A"/>
+                <rect x="88" y="30" width="30" height="80" fill="#1D3C5A"/>
+                <rect x="122" y="55" width="22" height="55" fill="#1D3C5A"/>
+              </svg>
+            </div>
+          </div>
+          <div class="cities-label">
+            <p class="cities-name">Bengaluru</p>
+            <p class="cities-sub">Karnataka</p>
+          </div>
+        </div>
+
+        <div class="cities-city-card" onclick="goToCity('delhi')">
+          <div class="cities-img-wrap">
+            <div class="cities-img-placeholder" style="background: linear-gradient(160deg,#d4c5a0 0%,#b8a070 100%);">
+              <svg viewBox="0 0 160 110" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;opacity:0.35;">
+                <rect x="15" y="50" width="18" height="60" fill="#5c3317"/>
+                <rect x="38" y="35" width="22" height="75" fill="#5c3317"/>
+                <rect x="65" y="45" width="30" height="65" fill="#5c3317"/>
+                <rect x="100" y="30" width="20" height="80" fill="#5c3317"/>
+                <rect x="125" y="55" width="18" height="55" fill="#5c3317"/>
+              </svg>
+            </div>
+          </div>
+          <div class="cities-label">
+            <p class="cities-name">Delhi NCR</p>
+            <p class="cities-sub">Delhi · Gurugram · Noida</p>
+          </div>
+        </div>
+
+        <div class="cities-city-card" onclick="goToCity('mumbai')">
+          <div class="cities-img-wrap">
+            <div class="cities-img-placeholder" style="background: linear-gradient(160deg,#a8c5d8 0%,#6699bb 100%);">
+              <svg viewBox="0 0 160 110" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;opacity:0.35;">
+                <rect x="5"  y="20" width="16" height="90" fill="#0f4c75"/>
+                <rect x="25" y="35" width="20" height="75" fill="#0f4c75"/>
+                <rect x="50" y="10" width="18" height="100" fill="#0f4c75"/>
+                <rect x="73" y="40" width="22" height="70" fill="#0f4c75"/>
+                <rect x="100" y="25" width="16" height="85" fill="#0f4c75"/>
+                <rect x="120" y="45" width="20" height="65" fill="#0f4c75"/>
+              </svg>
+            </div>
+          </div>
+          <div class="cities-label">
+            <p class="cities-name">Mumbai</p>
+            <p class="cities-sub">Maharashtra</p>
+          </div>
+        </div>
+
+        <div class="cities-city-card" onclick="goToCity('hyderabad')">
+          <div class="cities-img-wrap">
+            <div class="cities-img-placeholder" style="background: linear-gradient(160deg,#c9b8d4 0%,#9a7aaa 100%);">
+              <svg viewBox="0 0 160 110" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;opacity:0.35;">
+                <rect x="12" y="55" width="20" height="55" fill="#4a1942"/>
+                <rect x="36" y="38" width="24" height="72" fill="#4a1942"/>
+                <rect x="65" y="48" width="18" height="62" fill="#4a1942"/>
+                <rect x="88" y="28" width="28" height="82" fill="#4a1942"/>
+                <rect x="120" y="52" width="22" height="58" fill="#4a1942"/>
+              </svg>
+            </div>
+          </div>
+          <div class="cities-label">
+            <p class="cities-name">Hyderabad</p>
+            <p class="cities-sub">Telangana</p>
+          </div>
+        </div>
+
+        <div class="cities-city-card" onclick="goToCity('pune')">
+          <div class="cities-img-wrap">
+            <div class="cities-img-placeholder" style="background: linear-gradient(160deg,#b8d4c0 0%,#7aaa88 100%);">
+              <svg viewBox="0 0 160 110" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;opacity:0.35;">
+                <rect x="8"  y="58" width="18" height="52" fill="#1a4731"/>
+                <rect x="30" y="42" width="22" height="68" fill="#1a4731"/>
+                <rect x="57" y="52" width="20" height="58" fill="#1a4731"/>
+                <rect x="82" y="35" width="26" height="75" fill="#1a4731"/>
+                <rect x="113" y="55" width="20" height="55" fill="#1a4731"/>
+              </svg>
+            </div>
+          </div>
+          <div class="cities-label">
+            <p class="cities-name">Pune</p>
+            <p class="cities-sub">Maharashtra</p>
+          </div>
+        </div>
+
+        <div class="cities-city-card" onclick="goToCity('chennai')">
+          <div class="cities-img-wrap">
+            <div class="cities-img-placeholder" style="background: linear-gradient(160deg,#d4c4a0 0%,#c4a460 100%);">
+              <svg viewBox="0 0 160 110" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;opacity:0.35;">
+                <rect x="10" y="62" width="16" height="48" fill="#7d4e00"/>
+                <rect x="30" y="44" width="20" height="66" fill="#7d4e00"/>
+                <rect x="55" y="54" width="22" height="56" fill="#7d4e00"/>
+                <rect x="82" y="36" width="24" height="74" fill="#7d4e00"/>
+                <rect x="111" y="58" width="18" height="52" fill="#7d4e00"/>
+                <rect x="133" y="48" width="16" height="62" fill="#7d4e00"/>
+              </svg>
+            </div>
+          </div>
+          <div class="cities-label">
+            <p class="cities-name">Chennai</p>
+            <p class="cities-sub">Tamil Nadu</p>
+          </div>
+        </div>
+
+      </div>
+      <p style="font-size: 12px; color: var(--gray-400); margin-top: 12px;">Photos via Google Maps · Coming soon</p>
+    </div>
+  </section>
+
   <!-- How it works -->
   <section class="section">
     <div class="container">
@@ -856,6 +1127,121 @@
 
   <div class="divider"></div>
 
+  <!-- City scroll row -->
+  <section class="section">
+    <div class="container">
+      <p class="section-label">Browse by city</p>
+      <h2>Find reviews near you</h2>
+      <div class="city-scroll-row" style="margin-top: 32px;">
+        <div class="city-scroll">
+
+          <div class="city-card" onclick="goToCity('bengaluru')">
+            <div class="city-img-wrap">
+              <img class="city-img" src="https://images.unsplash.com/photo-1600100397608-f82062c42a65?w=400&h=220&q=80&fit=crop&auto=format" alt="Bengaluru" loading="lazy" onerror="this.style.display='none';this.parentElement.style.background='#E8EEF4';this.parentElement.innerHTML+='<div style=\'display:flex;align-items:center;justify-content:center;height:110px;font-size:32px;\'>🏙</div>'" />
+            </div>
+            <div class="city-label">
+              <p class="city-name">Bengaluru</p>
+              <p class="city-state">Karnataka</p>
+            </div>
+          </div>
+
+          <div class="city-card" onclick="goToCity('mumbai')">
+            <div class="city-img-wrap">
+              <img class="city-img" src="https://images.unsplash.com/photo-1570168007204-dfb528c6958f?w=400&h=220&q=80&fit=crop&auto=format" alt="Mumbai" loading="lazy" onerror="this.style.display='none';this.parentElement.style.background='#EFF4EB';this.parentElement.innerHTML+='<div style=\'display:flex;align-items:center;justify-content:center;height:110px;font-size:32px;\'>🌊</div>'" />
+            </div>
+            <div class="city-label">
+              <p class="city-name">Mumbai</p>
+              <p class="city-state">Maharashtra</p>
+            </div>
+          </div>
+
+          <div class="city-card" onclick="goToCity('delhi')">
+            <div class="city-img-wrap">
+              <img class="city-img" src="https://images.unsplash.com/photo-1587474260584-136574528ed5?w=400&h=220&q=80&fit=crop&auto=format" alt="Delhi" loading="lazy" onerror="this.style.display='none';this.parentElement.style.background='#FFF8E7';this.parentElement.innerHTML+='<div style=\'display:flex;align-items:center;justify-content:center;height:110px;font-size:32px;\'>🕌</div>'" />
+            </div>
+            <div class="city-label">
+              <p class="city-name">Delhi</p>
+              <p class="city-state">NCR</p>
+            </div>
+          </div>
+
+          <div class="city-card" onclick="goToCity('hyderabad')">
+            <div class="city-img-wrap">
+              <img class="city-img" src="https://images.unsplash.com/photo-1594476657933-380e7e373c3e?w=400&h=220&q=80&fit=crop&auto=format" alt="Hyderabad" loading="lazy" onerror="this.style.display='none';this.parentElement.style.background='#F0FDF4';this.parentElement.innerHTML+='<div style=\'display:flex;align-items:center;justify-content:center;height:110px;font-size:32px;\'>💎</div>'" />
+            </div>
+            <div class="city-label">
+              <p class="city-name">Hyderabad</p>
+              <p class="city-state">Telangana</p>
+            </div>
+          </div>
+
+          <div class="city-card" onclick="goToCity('pune')">
+            <div class="city-img-wrap">
+              <img class="city-img" src="https://images.unsplash.com/photo-1558431382-27e303142255?w=400&h=220&q=80&fit=crop&auto=format" alt="Pune" loading="lazy" onerror="this.style.display='none';this.parentElement.style.background='#FEF2F2';this.parentElement.innerHTML+='<div style=\'display:flex;align-items:center;justify-content:center;height:110px;font-size:32px;\'>🏛</div>'" />
+            </div>
+            <div class="city-label">
+              <p class="city-name">Pune</p>
+              <p class="city-state">Maharashtra</p>
+            </div>
+          </div>
+
+          <div class="city-card" onclick="goToCity('chennai')">
+            <div class="city-img-wrap">
+              <img class="city-img" src="https://images.unsplash.com/photo-1582510003544-4d00b7f74220?w=400&h=220&q=80&fit=crop&auto=format" alt="Chennai" loading="lazy" onerror="this.style.display='none';this.parentElement.style.background='#E8EEF4';this.parentElement.innerHTML+='<div style=\'display:flex;align-items:center;justify-content:center;height:110px;font-size:32px;\'>🌅</div>'" />
+            </div>
+            <div class="city-label">
+              <p class="city-name">Chennai</p>
+              <p class="city-state">Tamil Nadu</p>
+            </div>
+          </div>
+
+          <div class="city-card" onclick="goToCity('kolkata')">
+            <div class="city-img-wrap">
+              <img class="city-img" src="https://images.unsplash.com/photo-1531778272849-d1dd22444c06?w=400&h=220&q=80&fit=crop&auto=format" alt="Kolkata" loading="lazy" onerror="this.style.display='none';this.parentElement.style.background='#EFF4EB';this.parentElement.innerHTML+='<div style=\'display:flex;align-items:center;justify-content:center;height:110px;font-size:32px;\'>🌿</div>'" />
+            </div>
+            <div class="city-label">
+              <p class="city-name">Kolkata</p>
+              <p class="city-state">West Bengal</p>
+            </div>
+          </div>
+
+          <div class="city-card" onclick="goToCity('gurugram')">
+            <div class="city-img-wrap">
+              <img class="city-img" src="https://images.unsplash.com/photo-1614027164847-1b28cfe1df60?w=400&h=220&q=80&fit=crop&auto=format" alt="Gurugram" loading="lazy" onerror="this.style.display='none';this.parentElement.style.background='#FFF8E7';this.parentElement.innerHTML+='<div style=\'display:flex;align-items:center;justify-content:center;height:110px;font-size:32px;\'>🏗</div>'" />
+            </div>
+            <div class="city-label">
+              <p class="city-name">Gurugram</p>
+              <p class="city-state">Haryana</p>
+            </div>
+          </div>
+
+          <div class="city-card" onclick="goToCity('ahmedabad')">
+            <div class="city-img-wrap">
+              <img class="city-img" src="https://images.unsplash.com/photo-1567157577867-05ccb1388e66?w=400&h=220&q=80&fit=crop&auto=format" alt="Ahmedabad" loading="lazy" onerror="this.style.display='none';this.parentElement.style.background='#E8EEF4';this.parentElement.innerHTML+='<div style=\'display:flex;align-items:center;justify-content:center;height:110px;font-size:32px;\'>🕍</div>'" />
+            </div>
+            <div class="city-label">
+              <p class="city-name">Ahmedabad</p>
+              <p class="city-state">Gujarat</p>
+            </div>
+          </div>
+
+          <div class="city-card" onclick="goToCity('noida')">
+            <div class="city-img-wrap">
+              <img class="city-img" src="https://images.unsplash.com/photo-1591123120675-6f7f1aae0e5b?w=400&h=220&q=80&fit=crop&auto=format" alt="Noida" loading="lazy" onerror="this.style.display='none';this.parentElement.style.background='#EFF4EB';this.parentElement.innerHTML+='<div style=\'display:flex;align-items:center;justify-content:center;height:110px;font-size:32px;\'>🏢</div>'" />
+            </div>
+            <div class="city-label">
+              <p class="city-name">Noida</p>
+              <p class="city-state">Uttar Pradesh</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
   <!-- FAQ -->
   <section class="section">
     <div class="container">
@@ -958,10 +1344,126 @@
       Reviews represent the opinions and experiences of individual tenants. Homredy does not independently verify every statement submitted and reserves the right to remove content that violates its policies.
     </div>
 
+    <!-- Browse city Netflix-style scroll row -->
+    <div class="browse-cities" style="margin-bottom: 32px;">
+      <p style="font-size: 13px; font-weight: 600; color: var(--gray-500); margin-bottom: 12px; text-transform: uppercase; letter-spacing: 0.8px;">Browse by city</p>
+      <div class="city-netflix-scroll">
+
+        <div class="city-netflix-card" data-city="bengaluru" onclick="setCityFilter('bengaluru')" style="background: linear-gradient(135deg, #1D3C5A 0%, #2d5a8e 100%);">
+          <div class="cnc-overlay"></div>
+          <div class="cnc-content">
+            <div class="cnc-icon">🏙</div>
+            <div class="cnc-name">Bengaluru</div>
+            <div class="cnc-state">Karnataka</div>
+          </div>
+        </div>
+
+        <div class="city-netflix-card" data-city="mumbai" onclick="setCityFilter('mumbai')" style="background: linear-gradient(135deg, #0f4c75 0%, #1b6ca8 100%);">
+          <div class="cnc-overlay"></div>
+          <div class="cnc-content">
+            <div class="cnc-icon">🌊</div>
+            <div class="cnc-name">Mumbai</div>
+            <div class="cnc-state">Maharashtra</div>
+          </div>
+        </div>
+
+        <div class="city-netflix-card" data-city="delhi" onclick="setCityFilter('delhi')" style="background: linear-gradient(135deg, #5c3317 0%, #8B4513 100%);">
+          <div class="cnc-overlay"></div>
+          <div class="cnc-content">
+            <div class="cnc-icon">🕌</div>
+            <div class="cnc-name">Delhi</div>
+            <div class="cnc-state">NCR</div>
+          </div>
+        </div>
+
+        <div class="city-netflix-card" data-city="hyderabad" onclick="setCityFilter('hyderabad')" style="background: linear-gradient(135deg, #4a1942 0%, #7d2f7d 100%);">
+          <div class="cnc-overlay"></div>
+          <div class="cnc-content">
+            <div class="cnc-icon">💎</div>
+            <div class="cnc-name">Hyderabad</div>
+            <div class="cnc-state">Telangana</div>
+          </div>
+        </div>
+
+        <div class="city-netflix-card" data-city="pune" onclick="setCityFilter('pune')" style="background: linear-gradient(135deg, #1a4731 0%, #2d7a52 100%);">
+          <div class="cnc-overlay"></div>
+          <div class="cnc-content">
+            <div class="cnc-icon">🏛</div>
+            <div class="cnc-name">Pune</div>
+            <div class="cnc-state">Maharashtra</div>
+          </div>
+        </div>
+
+        <div class="city-netflix-card" data-city="chennai" onclick="setCityFilter('chennai')" style="background: linear-gradient(135deg, #7d4e00 0%, #c47d0e 100%);">
+          <div class="cnc-overlay"></div>
+          <div class="cnc-content">
+            <div class="cnc-icon">🌅</div>
+            <div class="cnc-name">Chennai</div>
+            <div class="cnc-state">Tamil Nadu</div>
+          </div>
+        </div>
+
+        <div class="city-netflix-card" data-city="kolkata" onclick="setCityFilter('kolkata')" style="background: linear-gradient(135deg, #2c4a1e 0%, #4a7c2f 100%);">
+          <div class="cnc-overlay"></div>
+          <div class="cnc-content">
+            <div class="cnc-icon">🌿</div>
+            <div class="cnc-name">Kolkata</div>
+            <div class="cnc-state">West Bengal</div>
+          </div>
+        </div>
+
+        <div class="city-netflix-card" data-city="gurugram" onclick="setCityFilter('gurugram')" style="background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);">
+          <div class="cnc-overlay"></div>
+          <div class="cnc-content">
+            <div class="cnc-icon">🏗</div>
+            <div class="cnc-name">Gurugram</div>
+            <div class="cnc-state">Haryana</div>
+          </div>
+        </div>
+
+        <div class="city-netflix-card" data-city="ahmedabad" onclick="setCityFilter('ahmedabad')" style="background: linear-gradient(135deg, #7d1c1c 0%, #c0392b 100%);">
+          <div class="cnc-overlay"></div>
+          <div class="cnc-content">
+            <div class="cnc-icon">🕍</div>
+            <div class="cnc-name">Ahmedabad</div>
+            <div class="cnc-state">Gujarat</div>
+          </div>
+        </div>
+
+        <div class="city-netflix-card" data-city="noida" onclick="setCityFilter('noida')" style="background: linear-gradient(135deg, #2c3e50 0%, #3d566e 100%);">
+          <div class="cnc-overlay"></div>
+          <div class="cnc-content">
+            <div class="cnc-icon">🏢</div>
+            <div class="cnc-name">Noida</div>
+            <div class="cnc-state">Uttar Pradesh</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
     <!-- Search bar -->
     <div class="search-bar">
-      <input class="form-input" type="text" placeholder="🔍  Search by property name..." id="searchProp" oninput="filterReviews()" />
-      <input class="form-input" type="text" placeholder="🏙  City" id="searchCity" oninput="filterReviews()" />
+      <div class="autocomplete-wrap">
+        <input class="form-input" type="text" placeholder="🔍  Search by property name..." id="searchProp"
+          oninput="handlePropInput(this.value)" onkeydown="handlePropKey(event)"
+          autocomplete="off" aria-label="Search by property name" aria-autocomplete="list"
+          aria-controls="propDropdown" aria-expanded="false" />
+        <div class="autocomplete-dropdown" id="propDropdown" role="listbox"></div>
+      </div>
+      <select class="form-select" id="searchCity" onchange="filterReviews()" style="flex:1; min-width:140px;">
+        <option value="">🏙 All Cities</option>
+        <option value="bengaluru">Bengaluru</option>
+        <option value="mumbai">Mumbai</option>
+        <option value="delhi">Delhi</option>
+        <option value="hyderabad">Hyderabad</option>
+        <option value="pune">Pune</option>
+        <option value="chennai">Chennai</option>
+        <option value="kolkata">Kolkata</option>
+        <option value="ahmedabad">Ahmedabad</option>
+        <option value="gurugram">Gurugram</option>
+        <option value="noida">Noida</option>
+      </select>
       <input class="form-input" type="text" placeholder="📌  Locality / Area" id="searchLocality" oninput="filterReviews()" />
       <select class="form-select" id="filterRating" onchange="filterReviews()">
         <option value="">All Ratings</option>
@@ -1031,7 +1533,20 @@
             </div>
             <div class="form-group">
               <label class="form-label">City <span>*</span></label>
-              <input name="city" class="form-input" type="text" placeholder="e.g. Bengaluru" required />
+              <select name="city" class="form-select" required>
+                <option value="">Select city</option>
+                <option value="Bengaluru">Bengaluru</option>
+                <option value="Delhi">Delhi</option>
+                <option value="Mumbai">Mumbai</option>
+                <option value="Hyderabad">Hyderabad</option>
+                <option value="Pune">Pune</option>
+                <option value="Chennai">Chennai</option>
+                <option value="Kolkata">Kolkata</option>
+                <option value="Gurugram">Gurugram</option>
+                <option value="Noida">Noida</option>
+                <option value="Ahmedabad">Ahmedabad</option>
+                <option value="Other">Other</option>
+              </select>
             </div>
           </div>
           <div class="form-row">
@@ -1875,6 +2390,116 @@
     }).join('');
   }
 
+  // ── City scroll navigation ──
+  function goToCity(cityValue) {
+    showPage('browse');
+    const select = document.getElementById('searchCity');
+    if (select) {
+      select.value = cityValue;
+      filterReviews();
+    }
+    // Highlight the active pill
+    document.querySelectorAll('.city-pill').forEach(p => p.classList.remove('active'));
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function setCityFilter(cityValue) {
+    const select = document.getElementById('searchCity');
+    if (select) {
+      select.value = cityValue;
+      filterReviews();
+    }
+    document.querySelectorAll('.city-netflix-card').forEach(p => {
+      p.classList.toggle('active', p.dataset.city === cityValue);
+    });
+  }
+
+  // ── Property autocomplete ──
+  // propertiesList is populated from Firestore on page load (see module script).
+  let propertiesList = [];
+  let acIndex = -1; // keyboard nav cursor
+
+  function handlePropInput(val) {
+    acIndex = -1;
+    const dropdown = document.getElementById('propDropdown');
+    const input = document.getElementById('searchProp');
+
+    if (!val.trim()) {
+      closeDropdown();
+      filterReviews();
+      return;
+    }
+
+    const lower = val.toLowerCase();
+    const matches = propertiesList
+      .filter(p => p.name.toLowerCase().includes(lower))
+      .slice(0, 12); // cap at 12 results
+
+    if (matches.length === 0) {
+      dropdown.innerHTML = `<div class="ac-empty">No matching properties found</div>`;
+      dropdown.classList.add('open');
+      input.setAttribute('aria-expanded', 'true');
+      return;
+    }
+
+    dropdown.innerHTML = matches.map((p, i) => {
+      // Highlight the matching substring
+      const re = new RegExp(`(${val.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
+      const highlighted = p.name.replace(re, '<mark>$1</mark>');
+      return `<div class="ac-item" role="option" data-name="${p.name}"
+        onmousedown="selectProperty('${p.name.replace(/'/g, "\\'")}')">${highlighted}</div>`;
+    }).join('');
+
+    dropdown.classList.add('open');
+    input.setAttribute('aria-expanded', 'true');
+  }
+
+  function handlePropKey(e) {
+    const dropdown = document.getElementById('propDropdown');
+    const items = dropdown.querySelectorAll('.ac-item');
+    if (!dropdown.classList.contains('open') || items.length === 0) return;
+
+    if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      acIndex = Math.min(acIndex + 1, items.length - 1);
+      items.forEach((el, i) => el.classList.toggle('active', i === acIndex));
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      acIndex = Math.max(acIndex - 1, 0);
+      items.forEach((el, i) => el.classList.toggle('active', i === acIndex));
+    } else if (e.key === 'Enter') {
+      e.preventDefault();
+      if (acIndex >= 0 && items[acIndex]) {
+        selectProperty(items[acIndex].dataset.name);
+      } else {
+        closeDropdown();
+        filterReviews();
+      }
+    } else if (e.key === 'Escape') {
+      closeDropdown();
+    }
+  }
+
+  function selectProperty(name) {
+    document.getElementById('searchProp').value = name;
+    closeDropdown();
+    filterReviews();
+  }
+
+  function closeDropdown() {
+    const dropdown = document.getElementById('propDropdown');
+    const input = document.getElementById('searchProp');
+    dropdown.classList.remove('open');
+    dropdown.innerHTML = '';
+    input.setAttribute('aria-expanded', 'false');
+    acIndex = -1;
+  }
+
+  // Close dropdown when clicking outside the search area
+  document.addEventListener('click', (e) => {
+    if (!e.target.closest('.autocomplete-wrap')) closeDropdown();
+  });
+
   function filterReviews() {
     const prop = document.getElementById('searchProp').value.toLowerCase();
     const city = document.getElementById('searchCity').value.toLowerCase();
@@ -2009,6 +2634,17 @@
 
   const app = initializeApp(firebaseConfig);
   const db = getFirestore(app);
+
+  // Fetch all properties for autocomplete — runs once on load.
+  (async function loadProperties() {
+    try {
+      const snap = await getDocs(collection(db, 'properties'));
+      propertiesList = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+      console.log(`Loaded ${propertiesList.length} properties for autocomplete.`);
+    } catch (err) {
+      console.warn('Could not load properties for autocomplete:', err);
+    }
+  })();
 
   // Submit a new review to Firestore.
   window.submitReview = async function (event) {
