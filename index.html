@@ -176,17 +176,17 @@
     .form-label { font-size: 14px; font-weight: 600; color: var(--gray-700); }
     .form-label span { color: #EF4444; margin-left: 2px; }
     .form-input, .form-select, .form-textarea {
-      width: 100%; padding: 11px 14px;
+      width: 100%; padding: 12px 14px;
       border: 1.5px solid var(--gray-200); border-radius: var(--radius-sm);
-      font-family: 'Inter', sans-serif; font-size: 15px; color: var(--gray-700);
+      font-family: 'Inter', sans-serif; font-size: 16px; color: var(--gray-700);
       background: var(--white); transition: border-color 0.2s, box-shadow 0.2s;
-      outline: none;
+      outline: none; -webkit-appearance: none; appearance: none;
     }
     .form-input:focus, .form-select:focus, .form-textarea:focus {
       border-color: var(--navy); box-shadow: 0 0 0 3px rgba(29,60,90,0.08);
     }
     .form-textarea { resize: vertical; min-height: 120px; }
-    .form-hint { font-size: 12px; color: var(--gray-400); }
+    .form-hint { font-size: 13px; color: var(--gray-400); }
 
     /* Rating stars input */
     .star-input { display: flex; gap: 6px; }
@@ -417,7 +417,20 @@
       .city-img, .city-img-fallback { width: 140px; height: 96px; }
     }
 
-    /* ── Cities row (above How it works) ── */
+    /* ── Detect city button ── */
+    .detect-city-btn {
+      flex-shrink: 0; width: 42px; height: 42px;
+      border-radius: var(--radius-sm); border: 1.5px solid var(--gray-200);
+      background: var(--white); cursor: pointer; font-size: 18px;
+      display: flex; align-items: center; justify-content: center;
+      transition: all 0.2s;
+    }
+    .detect-city-btn:hover { border-color: var(--navy); background: #E8EEF4; }
+    .detect-city-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+    .detect-city-btn.detecting { animation: pulse 1s infinite; }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+
+
     .cities-row {
       display: flex; gap: 16px;
       overflow-x: auto; padding: 4px 2px 8px;
@@ -541,7 +554,10 @@
     .star-picker { display: flex; gap: 4px; }
     .star-btn {
       background: none; border: none; cursor: pointer;
-      font-size: 24px; color: var(--gray-200); transition: color 0.1s; padding: 2px;
+      font-size: 28px; color: var(--gray-200); transition: color 0.1s;
+      padding: 4px 6px; min-width: 44px; min-height: 44px;
+      display: inline-flex; align-items: center; justify-content: center;
+      -webkit-tap-highlight-color: transparent;
     }
     .star-btn.active { color: #F59E0B; }
 
@@ -550,9 +566,10 @@
     .radio-pill input { display: none; }
     .radio-pill label {
       display: inline-flex; align-items: center; gap: 6px;
-      padding: 8px 16px; border-radius: 100px;
-      border: 1.5px solid var(--gray-200); font-size: 14px; font-weight: 500;
+      padding: 10px 18px; border-radius: 100px;
+      border: 1.5px solid var(--gray-200); font-size: 15px; font-weight: 500;
       color: var(--gray-500); cursor: pointer; transition: all 0.2s;
+      min-height: 44px;
       background: var(--white);
     }
     .radio-pill input:checked + label {
@@ -733,6 +750,7 @@
       .footer-grid { grid-template-columns: 1fr 1fr; }
       .trust-section, .about-hero { padding: 40px 28px; margin: 0; border-radius: 0; }
       .about-hero { margin: 0 24px; border-radius: var(--radius); }
+      .sidebar-tips { position: static; }
     }
     @media (max-width: 600px) {
       .how-grid, .reviews-grid, .browse-grid, .grid-3, .values-grid { grid-template-columns: 1fr; }
@@ -742,10 +760,42 @@
       .hero-actions { flex-direction: column; }
       .hero-actions .btn-primary, .hero-actions .btn-secondary { text-align: center; justify-content: center; }
       .section { padding: 56px 0; }
+      .section-sm { padding: 32px 0; }
       .cookie-banner { flex-direction: column; }
       .cookie-actions { width: 100%; justify-content: center; }
       .about-hero { margin: 0; border-radius: 0; }
       .grid-4 { grid-template-columns: 1fr 1fr; }
+
+      /* Submit form mobile fixes */
+      .submit-layout { gap: 24px; }
+      .review-form { gap: 18px; }
+      .rating-row { flex-direction: column; align-items: flex-start; gap: 10px; }
+      .star-picker { gap: 2px; }
+      .star-btn { font-size: 32px; min-width: 48px; }
+      .radio-pills { gap: 8px; }
+      .radio-pill label { font-size: 14px; padding: 9px 14px; }
+      .btn-primary { padding: 14px 24px; }
+
+      /* Page hero mobile */
+      .page-hero { padding: 32px 0; }
+      .page-hero h1 { font-size: clamp(24px, 6vw, 36px); }
+
+      /* Nav mobile */
+      .nav-inner { height: 56px; }
+      .logo { font-size: 20px; }
+
+      /* Browse city cards mobile */
+      .city-netflix-card { flex: 0 0 110px; height: 80px; }
+      .cnc-icon { font-size: 20px; }
+      .cnc-name { font-size: 11px; }
+
+      /* Cities row mobile */
+      .cities-city-card { flex: 0 0 150px; }
+      .cities-img-placeholder { height: 100px; }
+
+      /* Modal mobile */
+      .modal-card { padding: 20px; }
+      .modal-subratings { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -800,8 +850,8 @@
               <div class="lbl">Platform focused on renters</div>
             </div>
             <div class="hero-stat">
-              <div class="num">Transparency</div>
-              <div class="lbl">Real tenant experiences</div>
+              <div class="num">Free forever</div>
+              <div class="lbl">No signup required to read</div>
             </div>
             <div class="hero-stat">
               <div class="num">Moderated</div>
@@ -1529,24 +1579,38 @@
           <div class="form-row">
             <div class="form-group">
               <label class="form-label">Property / Apartment Name <span>*</span></label>
-              <input name="property" class="form-input" type="text" placeholder="e.g. Sunrise Heights" required />
+              <div style="position:relative;">
+                <input name="property" id="propertyInput" class="form-input" type="text"
+                  placeholder="e.g. Sunrise Heights"
+                  oninput="handlePropInput(this.value)"
+                  onkeydown="handlePropKey(event)"
+                  autocomplete="off" required />
+                <div class="autocomplete-dropdown" id="propDropdown" role="listbox"></div>
+              </div>
+              <div id="nearbyStatus" class="form-hint" style="min-height:16px;"></div>
             </div>
             <div class="form-group">
               <label class="form-label">City <span>*</span></label>
-              <select name="city" class="form-select" required>
-                <option value="">Select city</option>
-                <option value="Bengaluru">Bengaluru</option>
-                <option value="Delhi">Delhi</option>
-                <option value="Mumbai">Mumbai</option>
-                <option value="Hyderabad">Hyderabad</option>
-                <option value="Pune">Pune</option>
-                <option value="Chennai">Chennai</option>
-                <option value="Kolkata">Kolkata</option>
-                <option value="Gurugram">Gurugram</option>
-                <option value="Noida">Noida</option>
-                <option value="Ahmedabad">Ahmedabad</option>
-                <option value="Other">Other</option>
-              </select>
+              <div style="display:flex; gap:8px; align-items:center;">
+                <select name="city" id="citySelect" class="form-select" required>
+                  <option value="">Select city</option>
+                  <option value="Bengaluru">Bengaluru</option>
+                  <option value="Delhi">Delhi</option>
+                  <option value="Mumbai">Mumbai</option>
+                  <option value="Hyderabad">Hyderabad</option>
+                  <option value="Pune">Pune</option>
+                  <option value="Chennai">Chennai</option>
+                  <option value="Kolkata">Kolkata</option>
+                  <option value="Gurugram">Gurugram</option>
+                  <option value="Noida">Noida</option>
+                  <option value="Ahmedabad">Ahmedabad</option>
+                  <option value="Other">Other</option>
+                </select>
+                <button type="button" id="detectCityBtn" onclick="detectCity()" class="detect-city-btn" title="Detect my city">
+                  📍
+                </button>
+              </div>
+              <div id="detectCityStatus" class="form-hint" style="min-height:16px;"></div>
             </div>
           </div>
           <div class="form-row">
@@ -2390,6 +2454,167 @@
     }).join('');
   }
 
+  // ── Location detection for Submit Review form ──
+  // Maps Nominatim city/state names → dropdown option values
+  const CITY_MAP = {
+    'bengaluru': 'Bengaluru', 'bangalore': 'Bengaluru',
+    'delhi': 'Delhi', 'new delhi': 'Delhi',
+    'mumbai': 'Mumbai', 'bombay': 'Mumbai',
+    'hyderabad': 'Hyderabad',
+    'pune': 'Pune',
+    'chennai': 'Chennai', 'madras': 'Chennai',
+    'kolkata': 'Kolkata', 'calcutta': 'Kolkata',
+    'gurugram': 'Gurugram', 'gurgaon': 'Gurugram',
+    'noida': 'Noida',
+    'ahmedabad': 'Ahmedabad',
+  };
+
+  // Haversine formula — returns distance in metres between two lat/lng points
+  function haversineDistance(lat1, lng1, lat2, lng2) {
+    const R = 6371000;
+    const dLat = (lat2 - lat1) * Math.PI / 180;
+    const dLng = (lng2 - lng1) * Math.PI / 180;
+    const a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+              Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+              Math.sin(dLng/2) * Math.sin(dLng/2);
+    return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+  }
+
+  // Show nearby properties in the property field after location is detected
+  function suggestNearbyProperties(lat, lng) {
+    const nearbyStatus = document.getElementById('nearbyStatus');
+    const propInput = document.getElementById('propertyInput');
+    const dropdown = document.getElementById('propDropdown');
+
+    if (!propertiesList || propertiesList.length === 0) {
+      if (nearbyStatus) {
+        nearbyStatus.textContent = 'Type to search for your property.';
+        nearbyStatus.style.color = 'var(--gray-400)';
+      }
+      return;
+    }
+
+    // Find properties within 2km, sorted by distance
+    const nearby = propertiesList
+      .map(p => ({ ...p, dist: haversineDistance(lat, lng, p.lat, p.lng) }))
+      .filter(p => p.dist <= 2000)
+      .sort((a, b) => a.dist - b.dist)
+      .slice(0, 5);
+
+    if (nearby.length === 0) {
+      if (nearbyStatus) {
+        nearbyStatus.textContent = 'No known properties found nearby — type to search.';
+        nearbyStatus.style.color = 'var(--gray-400)';
+      }
+      return;
+    }
+
+    // Show them as dropdown suggestions
+    if (dropdown && propInput) {
+      dropdown.innerHTML = nearby.map(p => {
+        const distLabel = p.dist < 100 ? 'Very close' :
+                         p.dist < 500 ? `~${Math.round(p.dist)}m away` :
+                         `~${(p.dist/1000).toFixed(1)}km away`;
+        return `<div class="ac-item" role="option" data-name="${p.name}"
+          onmousedown="selectProperty('${p.name.replace(/'/g, "\\'")}')">
+          ${p.name}
+          <span style="font-size:11px;color:var(--gray-400);margin-left:8px;">${distLabel}</span>
+        </div>`;
+      }).join('');
+      dropdown.classList.add('open');
+      propInput.setAttribute('aria-expanded', 'true');
+    }
+
+    if (nearbyStatus) {
+      nearbyStatus.textContent = `📍 ${nearby.length} propert${nearby.length === 1 ? 'y' : 'ies'} found near you — select or type to search.`;
+      nearbyStatus.style.color = 'var(--sage-dark)';
+    }
+  }
+
+  function detectCity() {
+    const btn = document.getElementById('detectCityBtn');
+    const status = document.getElementById('detectCityStatus');
+    const select = document.getElementById('citySelect');
+
+    if (!navigator.geolocation) {
+      status.textContent = 'Location not supported on this browser.';
+      status.style.color = '#B91C1C';
+      return;
+    }
+
+    btn.disabled = true;
+    btn.classList.add('detecting');
+    btn.textContent = '⏳';
+    status.textContent = 'Detecting your location…';
+    status.style.color = 'var(--gray-400)';
+
+    navigator.geolocation.getCurrentPosition(
+      async (position) => {
+        const { latitude, longitude } = position.coords;
+
+        // Suggest nearby properties immediately using coordinates
+        suggestNearbyProperties(latitude, longitude);
+
+        try {
+          const res = await fetch(
+            `https://nominatim.openstreetmap.org/reverse?lat=${latitude}&lon=${longitude}&format=json`,
+            { headers: { 'Accept-Language': 'en' } }
+          );
+          const data = await res.json();
+          const addr = data.address || {};
+
+          const rawCity = (
+            addr.city ||
+            addr.town ||
+            addr.village ||
+            addr.county ||
+            addr.state_district ||
+            ''
+          ).toLowerCase().trim();
+
+          const matched = CITY_MAP[rawCity];
+
+          if (matched) {
+            select.value = matched;
+            status.textContent = `📍 Detected: ${matched}`;
+            status.style.color = 'var(--sage-dark)';
+          } else {
+            const partialMatch = Object.keys(CITY_MAP).find(k =>
+              rawCity.includes(k) || k.includes(rawCity)
+            );
+            if (partialMatch) {
+              select.value = CITY_MAP[partialMatch];
+              status.textContent = `📍 Detected: ${CITY_MAP[partialMatch]}`;
+              status.style.color = 'var(--sage-dark)';
+            } else {
+              status.textContent = `📍 Location detected but city not in list — please select manually. (${addr.city || addr.state || 'unknown'})`;
+              status.style.color = '#92400E';
+            }
+          }
+        } catch (err) {
+          status.textContent = 'Could not look up city. Please select manually.';
+          status.style.color = '#B91C1C';
+        }
+        btn.disabled = false;
+        btn.classList.remove('detecting');
+        btn.textContent = '📍';
+      },
+      (err) => {
+        const messages = {
+          1: 'Location permission denied. Please select city manually.',
+          2: 'Location unavailable. Please select city manually.',
+          3: 'Location request timed out. Please select city manually.',
+        };
+        status.textContent = messages[err.code] || 'Could not detect location.';
+        status.style.color = '#B91C1C';
+        btn.disabled = false;
+        btn.classList.remove('detecting');
+        btn.textContent = '📍';
+      },
+      { timeout: 10000, maximumAge: 60000 }
+    );
+  }
+
   // ── City scroll navigation ──
   function goToCity(cityValue) {
     showPage('browse');
@@ -2481,9 +2706,19 @@
   }
 
   function selectProperty(name) {
-    document.getElementById('searchProp').value = name;
+    // Fill whichever property input is currently active/visible
+    const browseInput = document.getElementById('searchProp');
+    const submitInput = document.getElementById('propertyInput');
+    if (submitInput && document.getElementById('page-submit').classList.contains('active')) {
+      submitInput.value = name;
+      // Also clear the nearby status hint
+      const ns = document.getElementById('nearbyStatus');
+      if (ns) { ns.textContent = ''; }
+    } else if (browseInput) {
+      browseInput.value = name;
+      filterReviews();
+    }
     closeDropdown();
-    filterReviews();
   }
 
   function closeDropdown() {
