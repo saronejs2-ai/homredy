@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
   <title>Homredy – Know Before You Move</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
   <style>
@@ -78,7 +78,9 @@
     .nav-cta:hover { background: var(--navy-light); }
     .hamburger {
       display: none; background: none; border: none; cursor: pointer;
-      flex-direction: column; gap: 5px; padding: 4px;
+      flex-direction: column; gap: 5px; padding: 10px;
+      min-width: 44px; min-height: 44px; align-items: center; justify-content: center;
+      -webkit-tap-highlight-color: transparent;
     }
     .hamburger span {
       display: block; width: 22px; height: 2px;
@@ -419,17 +421,16 @@
 
     /* ── Detect city button ── */
     .detect-city-btn {
-      flex-shrink: 0; width: 42px; height: 42px;
+      flex-shrink: 0; width: 44px; height: 44px;
       border-radius: var(--radius-sm); border: 1.5px solid var(--gray-200);
-      background: var(--white); cursor: pointer; font-size: 18px;
+      background: var(--white); cursor: pointer; font-size: 20px;
       display: flex; align-items: center; justify-content: center;
-      transition: all 0.2s;
+      transition: all 0.2s; -webkit-tap-highlight-color: transparent;
     }
     .detect-city-btn:hover { border-color: var(--navy); background: #E8EEF4; }
     .detect-city-btn:disabled { opacity: 0.5; cursor: not-allowed; }
     .detect-city-btn.detecting { animation: pulse 1s infinite; }
     @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
-
 
     .cities-row {
       display: flex; gap: 16px;
@@ -851,7 +852,7 @@
             </div>
             <div class="hero-stat">
               <div class="num">Transparency</div>
-              <div class="lbl">Real reviews</div>
+              <div class="lbl">Real tenant reviews, nothing hidden</div>
             </div>
             <div class="hero-stat">
               <div class="num">Moderated</div>
