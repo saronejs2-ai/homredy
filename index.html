@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
   <title>Homredy – Know Before You Move</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -731,6 +732,83 @@
       .modal-card { padding: 24px; max-height: 92vh; }
     }
 
+    /* ── AUTH GATE (Google Sign-In) ── */
+    .auth-card { max-width: 400px; text-align: center; }
+    .auth-icon {
+      width: 56px; height: 56px; border-radius: 50%;
+      background: var(--gray-100); display: flex; align-items: center;
+      justify-content: center; font-size: 26px; margin: 0 auto 16px;
+    }
+    .auth-card h3 { color: var(--navy); font-size: 20px; margin-bottom: 8px; }
+    .auth-card p { font-size: 14px; color: var(--gray-500); margin-bottom: 24px; line-height: 1.6; }
+    #google-signin-btn { display: flex; justify-content: center; min-height: 44px; }
+    .auth-fineprint { font-size: 12px; color: var(--gray-400); margin-top: 18px; line-height: 1.5; }
+    .auth-fineprint button {
+      background: none; border: none; color: var(--navy); text-decoration: underline;
+      cursor: pointer; font-family: inherit; font-size: 12px; padding: 0;
+    }
+    .auth-divider {
+      display: flex; align-items: center; gap: 12px; margin: 18px 0;
+      color: var(--gray-400); font-size: 13px;
+    }
+    .auth-divider::before, .auth-divider::after {
+      content: ''; flex: 1; height: 1px; background: var(--gray-200);
+    }
+    .phone-input-row { display: flex; gap: 8px; }
+    .phone-country-select {
+      border: 1px solid var(--gray-200); border-radius: var(--radius-sm);
+      padding: 0 8px; font-family: inherit; font-size: 14px; background: var(--white);
+      color: var(--gray-700);
+    }
+    .phone-number-input {
+      flex: 1; border: 1px solid var(--gray-200); border-radius: var(--radius-sm);
+      padding: 10px 12px; font-family: inherit; font-size: 15px; color: var(--gray-700);
+    }
+    .phone-number-input:focus, .otp-input:focus { outline: none; border-color: var(--navy); }
+    .otp-input {
+      width: 100%; border: 1px solid var(--gray-200); border-radius: var(--radius-sm);
+      padding: 12px; font-family: inherit; font-size: 20px; letter-spacing: 8px;
+      text-align: center; color: var(--gray-700);
+    }
+    .auth-links-row {
+      display: flex; justify-content: space-between; margin-top: 12px;
+    }
+    .auth-links-row button {
+      background: none; border: none; color: var(--navy); text-decoration: underline;
+      cursor: pointer; font-family: inherit; font-size: 12.5px; padding: 0;
+    }
+    .auth-error {
+      background: #FEF2F2; color: #B91C1C; font-size: 13px; padding: 10px 12px;
+      border-radius: var(--radius-sm); margin-top: 14px; text-align: left;
+    }
+
+    /* ── SIGNED-IN USER BADGE (nav) ── */
+    .user-badge {
+      display: none; align-items: center; gap: 8px; cursor: pointer;
+      padding: 4px 10px 4px 4px; border-radius: 999px; position: relative;
+    }
+    .user-badge.show { display: flex; }
+    .user-badge img {
+      width: 28px; height: 28px; border-radius: 50%; object-fit: cover;
+    }
+    .user-badge span { font-size: 14px; font-weight: 500; color: var(--gray-700); }
+    .user-menu {
+      display: none; position: absolute; top: 44px; right: 0;
+      background: var(--white); border-radius: var(--radius-sm);
+      box-shadow: var(--shadow-lg); min-width: 160px; z-index: 210;
+      border: 1px solid var(--gray-200); overflow: hidden;
+    }
+    .user-menu.open { display: block; }
+    .user-menu button {
+      width: 100%; text-align: left; padding: 10px 14px; background: none;
+      border: none; cursor: pointer; font-family: inherit; font-size: 14px;
+      color: var(--gray-700);
+    }
+    .user-menu button:hover { background: var(--gray-50); }
+    @media (max-width: 640px) {
+      .auth-card { padding: 24px; }
+    }
+
     /* ── PAGE HEADER ── */
     .page-hero { background: var(--white); padding: 48px 0; border-bottom: 1px solid var(--gray-200); }
     .page-hero h1 { font-size: clamp(28px, 4vw, 44px); }
@@ -812,6 +890,13 @@
       <button class="nav-link" onclick="showPage('about')">About</button>
       <button class="nav-link" onclick="showPage('contact')">Contact</button>
       <button class="nav-cta" onclick="showPage('submit')">Submit a Review</button>
+      <div class="user-badge" id="userBadge" onclick="toggleUserMenu()">
+        <img id="userBadgeImg" src="" alt="" />
+        <span id="userBadgeName"></span>
+        <div class="user-menu" id="userMenu">
+          <button onclick="signOutUser()">Sign out</button>
+        </div>
+      </div>
     </div>
     <button class="hamburger" onclick="toggleMenu()" aria-label="Menu">
       <span></span><span></span><span></span>
@@ -2320,9 +2405,266 @@
   </div>
 </div>
 
+<!-- Auth Gate Modal (Google Sign-In + Phone OTP) -->
+<div class="modal-overlay" id="authModalOverlay">
+  <div class="modal-card auth-card">
+    <button class="modal-close" onclick="closeAuthModal()" aria-label="Close">×</button>
+    <div class="auth-icon">🔐</div>
+    <h3>Sign in to browse reviews</h3>
+    <p>Create a free Homredy account to read real tenant reviews. It takes a few seconds — no password needed.</p>
+
+    <div id="google-signin-btn"></div>
+
+    <div class="auth-divider"><span>or</span></div>
+
+    <!-- Phone step 1: enter number -->
+    <div id="phoneStep1">
+      <div class="phone-input-row">
+        <select id="phoneCountryCode" class="phone-country-select">
+          <option value="+91" selected>🇮🇳 +91</option>
+          <option value="+1">🇺🇸 +1</option>
+          <option value="+44">🇬🇧 +44</option>
+          <option value="+971">🇦🇪 +971</option>
+          <option value="+65">🇸🇬 +65</option>
+        </select>
+        <input type="tel" id="phoneNumberInput" class="phone-number-input" placeholder="98765 43210" inputmode="numeric" autocomplete="tel" />
+      </div>
+      <button class="btn-primary" style="width:100%; margin-top:12px;" onclick="sendOtp()" id="sendOtpBtn">Send OTP</button>
+    </div>
+
+    <!-- Phone step 2: enter OTP -->
+    <div id="phoneStep2" style="display:none;">
+      <p style="font-size:13px; color: var(--gray-500); margin-bottom:10px;">Enter the 6-digit code sent to <strong id="otpSentTo"></strong></p>
+      <input type="text" id="otpCodeInput" class="otp-input" placeholder="––––––" maxlength="6" inputmode="numeric" autocomplete="one-time-code" />
+      <button class="btn-primary" style="width:100%; margin-top:12px;" onclick="verifyOtp()" id="verifyOtpBtn">Verify & Sign In</button>
+      <div class="auth-links-row">
+        <button type="button" onclick="changePhoneNumber()">Change number</button>
+        <button type="button" onclick="sendOtp(true)">Resend OTP</button>
+      </div>
+    </div>
+
+    <p class="auth-error" id="authError" style="display:none;"></p>
+    <div id="recaptcha-container"></div>
+
+    <p class="auth-fineprint">
+      By continuing, you agree to our <button onclick="showPage('terms')">Terms of Service</button> and <button onclick="showPage('privacy')">Privacy Policy</button>.
+    </p>
+  </div>
+</div>
+
 <script>
+  // ══════════════════════════════════════════════════════════════════
+  // GOOGLE SIGN-IN (auth gate for Browse Reviews)
+  // ══════════════════════════════════════════════════════════════════
+  // TODO: replace with your own OAuth 2.0 Client ID from
+  // https://console.cloud.google.com/apis/credentials
+  // (Application type: "Web application"; add https://www.homredy.com
+  // to "Authorized JavaScript origins" — no redirect URI needed for
+  // Google Identity Services' popup/One Tap sign-in.)
+  const GOOGLE_CLIENT_ID = 'YOUR_GOOGLE_CLIENT_ID.apps.googleusercontent.com';
+
+  // ══════════════════════════════════════════════════════════════════
+  // PHONE OTP SIGN-IN
+  // ══════════════════════════════════════════════════════════════════
+  // The actual Firebase Phone Auth calls (sendOtp/verifyOtp) live in
+  // the <script type="module"> block near the bottom of this file,
+  // reusing the same Firebase project ("homredy-fb5b0") already used
+  // for storing reviews. That block defines window.sendOtp,
+  // window.verifyOtp, and window.firebaseSignOut once Firebase Auth
+  // has loaded. Before that, calls here just show a friendly message.
+  // NOTE: Phone sign-in must be enabled in that Firebase project under
+  // Authentication → Sign-in method → Phone, and the project must be
+  // on the Blaze (pay-as-you-go) plan — Firebase does not support
+  // Phone Auth on the free Spark plan. Test phone numbers can be
+  // configured for free testing before upgrading.
+  function sendOtp(isResend) {
+    if (window.sendOtp && window.sendOtp !== sendOtp) {
+      window.sendOtp(isResend);
+    } else {
+      showAuthError('Phone sign-in is still loading — please try again in a moment.');
+    }
+  }
+
+  function verifyOtp() {
+    if (window.verifyOtp && window.verifyOtp !== verifyOtp) {
+      window.verifyOtp();
+    } else {
+      showAuthError('Phone sign-in is still loading — please try again in a moment.');
+    }
+  }
+
+  function showAuthError(message) {
+    const el = document.getElementById('authError');
+    el.textContent = message;
+    el.style.display = message ? 'block' : 'none';
+  }
+  window.showAuthError_ = showAuthError; // called by the Firebase phone-auth module script
+
+  // Called by the phone-auth module script once an OTP is verified —
+  // mirrors handleCredentialResponse() below for Google sign-in, so
+  // both paths land the user in the same signed-in state.
+  window.completeSignIn_ = function (user) {
+    localStorage.setItem(AUTH_STORAGE_KEY, JSON.stringify(user));
+    updateAuthUI();
+    closeAuthModal();
+    const target = pendingPage || 'browse';
+    pendingPage = null;
+    renderPage(target);
+  };
+
+  function changePhoneNumber() {
+    showAuthError('');
+    document.getElementById('phoneStep2').style.display = 'none';
+    document.getElementById('phoneStep1').style.display = 'block';
+    document.getElementById('otpCodeInput').value = '';
+  }
+
+  function resetPhoneForm() {
+    document.getElementById('phoneStep1').style.display = 'block';
+    document.getElementById('phoneStep2').style.display = 'none';
+    document.getElementById('phoneNumberInput').value = '';
+    document.getElementById('otpCodeInput').value = '';
+    showAuthError('');
+  }
+
+  const AUTH_STORAGE_KEY = 'homredy_user';
+  let pendingPage = null; // page the user was trying to reach when the gate opened
+
+  function getCurrentUser() {
+    try {
+      const raw = localStorage.getItem(AUTH_STORAGE_KEY);
+      return raw ? JSON.parse(raw) : null;
+    } catch (e) {
+      return null;
+    }
+  }
+
+  function isSignedIn() {
+    return !!getCurrentUser();
+  }
+
+  // Decodes the JWT ID token Google returns. This is enough to
+  // personalize the UI, but it is NOT a substitute for server-side
+  // verification — never trust this alone to gate real backend data.
+  function decodeJwt(token) {
+    try {
+      const base64 = token.split('.')[1].replace(/-/g, '+').replace(/_/g, '/');
+      const json = decodeURIComponent(
+        atob(base64)
+          .split('')
+          .map(c => '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2))
+          .join('')
+      );
+      return JSON.parse(json);
+    } catch (e) {
+      return null;
+    }
+  }
+
+  function handleCredentialResponse(response) {
+    const payload = decodeJwt(response.credential);
+    if (!payload) return;
+    const user = {
+      name: payload.name || payload.email,
+      email: payload.email,
+      picture: payload.picture || ''
+    };
+    localStorage.setItem(AUTH_STORAGE_KEY, JSON.stringify(user));
+    updateAuthUI();
+    closeAuthModal();
+    const target = pendingPage || 'browse';
+    pendingPage = null;
+    renderPage(target);
+  }
+
+  function signOutUser() {
+    localStorage.removeItem(AUTH_STORAGE_KEY);
+    if (window.google && google.accounts && google.accounts.id) {
+      google.accounts.id.disableAutoSelect();
+    }
+    if (window.firebaseSignOut) {
+      window.firebaseSignOut();
+    }
+    updateAuthUI();
+    document.getElementById('userMenu').classList.remove('open');
+    showPage('home');
+  }
+
+  function toggleUserMenu() {
+    document.getElementById('userMenu').classList.toggle('open');
+  }
+
+  // Builds a simple initials-avatar for phone users (no photo available).
+  function initialsAvatar(name) {
+    const initial = (name || '?').replace('+', '').trim().charAt(0).toUpperCase();
+    const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="56" height="56"><rect width="56" height="56" rx="28" fill="#1D3C5A"/><text x="50%" y="54%" font-family="Inter, sans-serif" font-size="24" fill="#fff" text-anchor="middle" dominant-baseline="middle">${initial}</text></svg>`;
+    return 'data:image/svg+xml;base64,' + btoa(svg);
+  }
+
+  function updateAuthUI() {
+    const user = getCurrentUser();
+    const badge = document.getElementById('userBadge');
+    if (user) {
+      document.getElementById('userBadgeImg').src = user.picture || initialsAvatar(user.name);
+      document.getElementById('userBadgeImg').alt = user.name;
+      document.getElementById('userBadgeName').textContent = user.email ? user.name.split(' ')[0] : user.name;
+      badge.classList.add('show');
+    } else {
+      badge.classList.remove('show');
+    }
+  }
+
+  function openAuthModal(targetPage) {
+    pendingPage = targetPage;
+    resetPhoneForm();
+    document.getElementById('authModalOverlay').classList.add('open');
+  }
+
+  function closeAuthModal() {
+    document.getElementById('authModalOverlay').classList.remove('open');
+  }
+
+  function initGoogleSignIn() {
+    if (!window.google || !google.accounts || !google.accounts.id) return;
+    google.accounts.id.initialize({
+      client_id: GOOGLE_CLIENT_ID,
+      callback: handleCredentialResponse
+    });
+    const btnContainer = document.getElementById('google-signin-btn');
+    if (btnContainer) {
+      google.accounts.id.renderButton(btnContainer, {
+        theme: 'outline', size: 'large', width: 300, text: 'signup_with'
+      });
+    }
+  }
+
+  window.addEventListener('load', () => {
+    updateAuthUI();
+    initGoogleSignIn();
+    initFirebase();
+  });
+
+
+  document.addEventListener('click', (e) => {
+    const badge = document.getElementById('userBadge');
+    if (badge && !badge.contains(e.target)) {
+      document.getElementById('userMenu').classList.remove('open');
+    }
+  });
+
   // ── Page routing ──
+  // Pages that require sign-in before they can be viewed.
+  const GATED_PAGES = ['browse'];
+
   function showPage(name) {
+    if (GATED_PAGES.includes(name) && !isSignedIn()) {
+      openAuthModal(name);
+      return;
+    }
+    renderPage(name);
+  }
+
+  function renderPage(name) {
     document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
     const targetedPage = document.getElementById('page-' + name);
     if (targetedPage) targetedPage.classList.add('active');
@@ -2947,6 +3289,118 @@
 
   // Initial load.
   window.fetchAndRenderReviews();
+</script>
+
+<script type="module">
+  // ══════════════════════════════════════════════════════════════════
+  // PHONE OTP SIGN-IN — reuses the same Firebase project as above
+  // ("homredy-fb5b0"). Requires, in the Firebase console for that
+  // project: Authentication → Sign-in method → enable "Phone", and
+  // the project must be on the Blaze (pay-as-you-go) plan — Phone
+  // Auth is not available on the free Spark plan (test phone numbers
+  // work for free before upgrading). Also add www.homredy.com under
+  // Authentication → Settings → Authorized domains.
+  // ══════════════════════════════════════════════════════════════════
+  import { initializeApp, getApps, getApp } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-app.js";
+  import {
+    getAuth, RecaptchaVerifier, signInWithPhoneNumber, signOut
+  } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-auth.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyC_sF4yTR_BImsRynqvfmoEydjxMIrrIkM",
+    authDomain: "homredy-fb5b0.firebaseapp.com",
+    projectId: "homredy-fb5b0",
+    storageBucket: "homredy-fb5b0.firebasestorage.app",
+    messagingSenderId: "187836764273",
+    appId: "1:187836764273:web:e3ac7de304ed1499734bd0",
+    measurementId: "G-ZN7YBVDH3R"
+  };
+
+  // Reuse the app instance if the Firestore module above already
+  // initialized it (same URL → same module registry → shared state);
+  // otherwise initialize it here.
+  const authApp = getApps().length ? getApp() : initializeApp(firebaseConfig);
+  const auth = getAuth(authApp);
+
+  let recaptchaVerifier = null;
+  let otpConfirmationResult = null;
+
+  function ensureRecaptcha() {
+    if (recaptchaVerifier) return recaptchaVerifier;
+    recaptchaVerifier = new RecaptchaVerifier(auth, 'recaptcha-container', { size: 'invisible' });
+    return recaptchaVerifier;
+  }
+
+  window.sendOtp = function (isResend) {
+    window.showAuthError_('');
+    const code = document.getElementById('phoneCountryCode').value;
+    const raw = document.getElementById('phoneNumberInput').value.replace(/[^0-9]/g, '');
+    if (raw.length < 6) {
+      window.showAuthError_('Enter a valid phone number.');
+      return;
+    }
+    const fullNumber = code + raw;
+    const btn = document.getElementById('sendOtpBtn');
+    btn.disabled = true;
+    btn.textContent = 'Sending…';
+
+    signInWithPhoneNumber(auth, fullNumber, ensureRecaptcha())
+      .then((confirmationResult) => {
+        otpConfirmationResult = confirmationResult;
+        document.getElementById('otpSentTo').textContent = fullNumber;
+        document.getElementById('phoneStep1').style.display = 'none';
+        document.getElementById('phoneStep2').style.display = 'block';
+        btn.disabled = false;
+        btn.textContent = 'Send OTP';
+      })
+      .catch((err) => {
+        console.error(err);
+        window.showAuthError_(friendlyAuthError(err));
+        btn.disabled = false;
+        btn.textContent = 'Send OTP';
+      });
+  };
+
+  window.verifyOtp = function () {
+    window.showAuthError_('');
+    const code = document.getElementById('otpCodeInput').value.trim();
+    if (!otpConfirmationResult || code.length < 4) {
+      window.showAuthError_('Enter the code we sent you.');
+      return;
+    }
+    const btn = document.getElementById('verifyOtpBtn');
+    btn.disabled = true;
+    btn.textContent = 'Verifying…';
+
+    otpConfirmationResult.confirm(code)
+      .then((result) => {
+        const phoneNumber = result.user.phoneNumber || document.getElementById('otpSentTo').textContent;
+        window.completeSignIn_({ name: phoneNumber, email: null, phone: phoneNumber, picture: '' });
+        btn.disabled = false;
+        btn.textContent = 'Verify & Sign In';
+      })
+      .catch((err) => {
+        console.error(err);
+        window.showAuthError_(friendlyAuthError(err));
+        btn.disabled = false;
+        btn.textContent = 'Verify & Sign In';
+      });
+  };
+
+  window.firebaseSignOut = function () {
+    if (auth.currentUser) signOut(auth).catch((e) => console.warn('Sign-out error:', e));
+  };
+
+  function friendlyAuthError(err) {
+    const map = {
+      'auth/invalid-phone-number': 'That phone number looks invalid. Check the format and try again.',
+      'auth/too-many-requests': 'Too many attempts. Please wait a bit and try again.',
+      'auth/code-expired': 'That code expired. Request a new one.',
+      'auth/invalid-verification-code': 'Incorrect code. Please try again.',
+      'auth/billing-not-enabled': 'Phone sign-in isn\'t fully set up yet — please use Google sign-in for now.'
+    };
+    return map[err.code] || 'Something went wrong. Please try again.';
+  }
 </script>
 </body>
 </html>
