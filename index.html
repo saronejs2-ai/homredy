@@ -194,6 +194,8 @@
     }
     .form-textarea { resize: vertical; min-height: 120px; }
     .form-hint { font-size: 13px; color: var(--gray-400); }
+    .form-hint.warn { color: #B91C1C; font-weight: 500; }
+    .form-textarea.flagged, .form-input.flagged { border-color: #B91C1C !important; }
 
     /* Rating stars input */
     .star-input { display: flex; gap: 6px; }
@@ -750,36 +752,6 @@
     .auth-fineprint button {
       background: none; border: none; color: var(--navy); text-decoration: underline;
       cursor: pointer; font-family: inherit; font-size: 12px; padding: 0;
-    }
-    .auth-divider {
-      display: flex; align-items: center; gap: 12px; margin: 18px 0;
-      color: var(--gray-400); font-size: 13px;
-    }
-    .auth-divider::before, .auth-divider::after {
-      content: ''; flex: 1; height: 1px; background: var(--gray-200);
-    }
-    .phone-input-row { display: flex; gap: 8px; }
-    .phone-country-select {
-      border: 1px solid var(--gray-200); border-radius: var(--radius-sm);
-      padding: 0 8px; font-family: inherit; font-size: 14px; background: var(--white);
-      color: var(--gray-700);
-    }
-    .phone-number-input {
-      flex: 1; border: 1px solid var(--gray-200); border-radius: var(--radius-sm);
-      padding: 10px 12px; font-family: inherit; font-size: 15px; color: var(--gray-700);
-    }
-    .phone-number-input:focus, .otp-input:focus { outline: none; border-color: var(--navy); }
-    .otp-input {
-      width: 100%; border: 1px solid var(--gray-200); border-radius: var(--radius-sm);
-      padding: 12px; font-family: inherit; font-size: 20px; letter-spacing: 8px;
-      text-align: center; color: var(--gray-700);
-    }
-    .auth-links-row {
-      display: flex; justify-content: space-between; margin-top: 12px;
-    }
-    .auth-links-row button {
-      background: none; border: none; color: var(--navy); text-decoration: underline;
-      cursor: pointer; font-family: inherit; font-size: 12.5px; padding: 0;
     }
     .auth-error {
       background: #FEF2F2; color: #B91C1C; font-size: 13px; padding: 10px 12px;
@@ -1708,7 +1680,7 @@
           <div class="form-row">
             <div class="form-group">
               <label class="form-label">Locality / Area <span>*</span></label>
-              <input name="locality" class="form-input" type="text" placeholder="e.g. Koramangala" required />
+              <input name="locality" id="localityInput" class="form-input" type="text" placeholder="e.g. Koramangala" required />
             </div>
             <div class="form-group">
               <label class="form-label">Length of Stay <span>*</span></label>
@@ -1801,8 +1773,8 @@
           </div>
           <div class="form-group">
             <label class="form-label">Describe your rental experience <span>*</span></label>
-            <textarea name="text" class="form-textarea" style="min-height: 160px;" placeholder="Share your experience — property condition, landlord behaviour, maintenance responsiveness, any issues you faced, what you liked, what future tenants should know..." required minlength="100"></textarea>
-            <div class="form-hint">Minimum 100 characters. Be factual and based on your personal experience.</div>
+            <textarea name="text" id="reviewTextInput" class="form-textarea" style="min-height: 160px;" placeholder="Share your experience — property condition, landlord behaviour, maintenance responsiveness, any issues you faced, what you liked, what future tenants should know..." required minlength="100" oninput="checkAbuseLive(this)"></textarea>
+            <div class="form-hint" id="reviewTextHint">Minimum 100 characters. Be factual and based on your personal experience — no abusive, insulting, or defamatory language.</div>
           </div>
 
           <!-- Contact -->
@@ -2411,46 +2383,17 @@
   </div>
 </div>
 
-<!-- Auth Gate Modal (Google Sign-In + Phone OTP) -->
+<!-- Auth Gate Modal (Google Sign-In) -->
 <div class="modal-overlay" id="authModalOverlay">
   <div class="modal-card auth-card">
     <button class="modal-close" onclick="closeAuthModal()" aria-label="Close">×</button>
     <div class="auth-icon">🔐</div>
     <h3>Sign in to browse reviews</h3>
-    <p>Create a free Homredy account to read real tenant reviews. It takes a few seconds — no password needed.</p>
+    <p>Create a free Homredy account with Google to read real tenant reviews. It takes a few seconds — no password needed.</p>
 
     <div id="google-signin-btn"></div>
 
-    <div class="auth-divider"><span>or</span></div>
-
-    <!-- Phone step 1: enter number -->
-    <div id="phoneStep1">
-      <div class="phone-input-row">
-        <select id="phoneCountryCode" class="phone-country-select">
-          <option value="+91" selected>🇮🇳 +91</option>
-          <option value="+1">🇺🇸 +1</option>
-          <option value="+44">🇬🇧 +44</option>
-          <option value="+971">🇦🇪 +971</option>
-          <option value="+65">🇸🇬 +65</option>
-        </select>
-        <input type="tel" id="phoneNumberInput" class="phone-number-input" placeholder="98765 43210" inputmode="numeric" autocomplete="tel" />
-      </div>
-      <button class="btn-primary" style="width:100%; margin-top:12px;" onclick="sendOtp()" id="sendOtpBtn">Send OTP</button>
-    </div>
-
-    <!-- Phone step 2: enter OTP -->
-    <div id="phoneStep2" style="display:none;">
-      <p style="font-size:13px; color: var(--gray-500); margin-bottom:10px;">Enter the 6-digit code sent to <strong id="otpSentTo"></strong></p>
-      <input type="text" id="otpCodeInput" class="otp-input" placeholder="––––––" maxlength="6" inputmode="numeric" autocomplete="one-time-code" />
-      <button class="btn-primary" style="width:100%; margin-top:12px;" onclick="verifyOtp()" id="verifyOtpBtn">Verify & Sign In</button>
-      <div class="auth-links-row">
-        <button type="button" onclick="changePhoneNumber()">Change number</button>
-        <button type="button" onclick="sendOtp(true)">Resend OTP</button>
-      </div>
-    </div>
-
     <p class="auth-error" id="authError" style="display:none;"></p>
-    <div id="recaptcha-container"></div>
 
     <p class="auth-fineprint">
       By continuing, you agree to our <button onclick="showPage('terms')">Terms of Service</button> and <button onclick="showPage('privacy')">Privacy Policy</button>.
@@ -2469,46 +2412,13 @@
   // Google Identity Services' popup/One Tap sign-in.)
   const GOOGLE_CLIENT_ID = '718351859738-qh544fb7t3732qghhmt9r2377vr5pqhg.apps.googleusercontent.com';
 
-  // ══════════════════════════════════════════════════════════════════
-  // PHONE OTP SIGN-IN
-  // ══════════════════════════════════════════════════════════════════
-  // The actual Firebase Phone Auth calls (sendOtp/verifyOtp) live in
-  // the <script type="module"> block near the bottom of this file,
-  // reusing the same Firebase project ("homredy-fb5b0") already used
-  // for storing reviews. That block defines window.sendOtp,
-  // window.verifyOtp, and window.firebaseSignOut once Firebase Auth
-  // has loaded. Before that, calls here just show a friendly message.
-  // NOTE: Phone sign-in must be enabled in that Firebase project under
-  // Authentication → Sign-in method → Phone, and the project must be
-  // on the Blaze (pay-as-you-go) plan — Firebase does not support
-  // Phone Auth on the free Spark plan. Test phone numbers can be
-  // configured for free testing before upgrading.
-  function sendOtp(isResend) {
-    if (window.sendOtp && window.sendOtp !== sendOtp) {
-      window.sendOtp(isResend);
-    } else {
-      showAuthError('Phone sign-in is still loading — please try again in a moment.');
-    }
-  }
-
-  function verifyOtp() {
-    if (window.verifyOtp && window.verifyOtp !== verifyOtp) {
-      window.verifyOtp();
-    } else {
-      showAuthError('Phone sign-in is still loading — please try again in a moment.');
-    }
-  }
-
   function showAuthError(message) {
     const el = document.getElementById('authError');
     el.textContent = message;
     el.style.display = message ? 'block' : 'none';
   }
-  window.showAuthError_ = showAuthError; // called by the Firebase phone-auth module script
 
-  // Called by the phone-auth module script once an OTP is verified —
-  // mirrors handleCredentialResponse() below for Google sign-in, so
-  // both paths land the user in the same signed-in state.
+  // Called once a sign-in completes (Google via Firebase).
   window.completeSignIn_ = function (user) {
     localStorage.setItem(AUTH_STORAGE_KEY, JSON.stringify(user));
     updateAuthUI();
@@ -2517,21 +2427,6 @@
     pendingPage = null;
     renderPage(target);
   };
-
-  function changePhoneNumber() {
-    showAuthError('');
-    document.getElementById('phoneStep2').style.display = 'none';
-    document.getElementById('phoneStep1').style.display = 'block';
-    document.getElementById('otpCodeInput').value = '';
-  }
-
-  function resetPhoneForm() {
-    document.getElementById('phoneStep1').style.display = 'block';
-    document.getElementById('phoneStep2').style.display = 'none';
-    document.getElementById('phoneNumberInput').value = '';
-    document.getElementById('otpCodeInput').value = '';
-    showAuthError('');
-  }
 
   const AUTH_STORAGE_KEY = 'homredy_user';
   let pendingPage = null; // page the user was trying to reach when the gate opened
@@ -2549,38 +2444,25 @@
     return !!getCurrentUser();
   }
 
-  // Decodes the JWT ID token Google returns. This is enough to
-  // personalize the UI, but it is NOT a substitute for server-side
-  // verification — never trust this alone to gate real backend data.
-  function decodeJwt(token) {
-    try {
-      const base64 = token.split('.')[1].replace(/-/g, '+').replace(/_/g, '/');
-      const json = decodeURIComponent(
-        atob(base64)
-          .split('')
-          .map(c => '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2))
-          .join('')
-      );
-      return JSON.parse(json);
-    } catch (e) {
-      return null;
-    }
-  }
-
+  // This is called by Google Identity Services with an ID token. We
+  // hand that token to Firebase (via window.signInWithGoogleViaFirebase,
+  // defined in the Firebase module script) so Google sign-ups create a
+  // real Firebase Auth user too — visible in Firebase Console →
+  // Authentication → Users, same place Phone sign-ups show up.
   function handleCredentialResponse(response) {
-    const payload = decodeJwt(response.credential);
-    if (!payload) return;
-    const user = {
-      name: payload.name || payload.email,
-      email: payload.email,
-      picture: payload.picture || ''
-    };
-    localStorage.setItem(AUTH_STORAGE_KEY, JSON.stringify(user));
-    updateAuthUI();
-    closeAuthModal();
-    const target = pendingPage || 'browse';
-    pendingPage = null;
-    renderPage(target);
+    showAuthError('');
+    if (!window.signInWithGoogleViaFirebase) {
+      showAuthError('Sign-in is still loading — please try again in a moment.');
+      return;
+    }
+    window.signInWithGoogleViaFirebase(response.credential)
+      .then((user) => {
+        window.completeSignIn_(user);
+      })
+      .catch((err) => {
+        console.error(err);
+        showAuthError('Google sign-in failed — please try again.');
+      });
   }
 
   function signOutUser() {
@@ -2628,7 +2510,7 @@
 
   function openAuthModal(targetPage) {
     pendingPage = targetPage;
-    resetPhoneForm();
+    showAuthError('');
     document.getElementById('authModalOverlay').classList.add('open');
   }
 
@@ -3236,6 +3118,64 @@
     }
   })();
 
+  // ══════════════════════════════════════════════════════════════════
+  // ABUSIVE LANGUAGE FILTER (review text, property name, locality)
+  // ══════════════════════════════════════════════════════════════════
+  // NOTE: this is a client-side word-list filter — good for catching
+  // honest mistakes and casual insults, but it's not real moderation:
+  // it can be bypassed (spacing/leetspeak/other languages) since the
+  // check runs in the visitor's own browser. For real protection,
+  // pair this with either (a) a Cloud Function that re-checks text on
+  // write using a moderation API (e.g. Perspective API) and rejects
+  // or flags it server-side, and/or (b) a manual approval queue so
+  // reviews only go live after you glance at them.
+  const ABUSE_WORDS = [
+    'fuck','fucking','fucker','motherfucker','shit','bullshit','bitch','bastard',
+    'asshole','dumbass','jackass','cunt','dick','dickhead','prick','piss','pissed',
+    'slut','whore','retard','retarded','idiot','moron','stupid','dumb','loser',
+    'scum','scumbag','pathetic','disgusting','worthless','trash','garbage human',
+    'chutiya','chutiye','madarchod','behenchod','bhenchod','bsdk','bhosdike','gandu',
+    'gaandu','randi','harami','haramzada','kutta','kutte','saala','saale','chodu',
+    'lund','lauda','chinal','kamina','kaminey'
+  ];
+  const ABUSE_REGEX = new RegExp('\\b(' + ABUSE_WORDS.map(w => w.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|') + ')\\b', 'i');
+
+  function findAbusiveWord(text) {
+    if (!text) return null;
+    const match = text.match(ABUSE_REGEX);
+    return match ? match[0] : null;
+  }
+
+  // Live feedback while typing the main review body.
+  function checkAbuseLive(el) {
+    const hit = findAbusiveWord(el.value);
+    const hint = document.getElementById('reviewTextHint');
+    if (hit) {
+      el.classList.add('flagged');
+      hint.classList.add('warn');
+      hint.textContent = 'Please remove abusive or insulting language before submitting.';
+    } else {
+      el.classList.remove('flagged');
+      hint.classList.remove('warn');
+      hint.textContent = 'Minimum 100 characters. Be factual and based on your personal experience — no abusive, insulting, or defamatory language.';
+    }
+  }
+  window.checkAbuseLive = checkAbuseLive; // module-scoped fn, exposed for the inline oninput= handler
+
+  // Checks all free-text fields in the review form; returns the id of
+  // the first field with a problem, or null if everything's clean.
+  function findFlaggedField(data) {
+    const fields = [
+      { key: 'text', id: 'reviewTextInput' },
+      { key: 'property', id: 'propertyInput' },
+      { key: 'locality', id: 'localityInput' }
+    ];
+    for (const f of fields) {
+      if (findAbusiveWord(data[f.key])) return f.id;
+    }
+    return null;
+  }
+
   // Submit a new review to Firestore.
   window.submitReview = async function (event) {
     event.preventDefault();
@@ -3247,6 +3187,18 @@
 
     const formData = new FormData(event.target);
     const data = Object.fromEntries(formData.entries());
+
+    const flaggedId = findFlaggedField(data);
+    if (flaggedId) {
+      alert("Please keep your review respectful — remove any abusive or insulting language before submitting.");
+      const el = document.getElementById(flaggedId);
+      if (el) {
+        el.classList.add('flagged');
+        el.focus();
+        el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+      return;
+    }
 
     data.rating_overall = Number(ratings.overall);
     data.rating_landlord = Number(ratings.landlord);
@@ -3305,17 +3257,14 @@
 
 <script type="module">
   // ══════════════════════════════════════════════════════════════════
-  // PHONE OTP SIGN-IN — reuses the same Firebase project as above
-  // ("homredy-fb5b0"). Requires, in the Firebase console for that
-  // project: Authentication → Sign-in method → enable "Phone", and
-  // the project must be on the Blaze (pay-as-you-go) plan — Phone
-  // Auth is not available on the free Spark plan (test phone numbers
-  // work for free before upgrading). Also add www.homredy.com under
-  // Authentication → Settings → Authorized domains.
+  // GOOGLE SIGN-IN VIA FIREBASE — reuses the same Firebase project as
+  // above ("homredy-fb5b0"), so Google sign-ups create a real
+  // Firebase Auth user (visible in Firebase Console → Authentication
+  // → Users), not just a browser-local session.
   // ══════════════════════════════════════════════════════════════════
   import { initializeApp, getApps, getApp } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-app.js";
   import {
-    getAuth, RecaptchaVerifier, signInWithPhoneNumber, signOut
+    getAuth, signOut, GoogleAuthProvider, signInWithCredential
   } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-auth.js";
 
   const firebaseConfig = {
@@ -3334,85 +3283,20 @@
   const authApp = getApps().length ? getApp() : initializeApp(firebaseConfig);
   const auth = getAuth(authApp);
 
-  let recaptchaVerifier = null;
-  let otpConfirmationResult = null;
-
-  function ensureRecaptcha() {
-    if (recaptchaVerifier) return recaptchaVerifier;
-    recaptchaVerifier = new RecaptchaVerifier(auth, 'recaptcha-container', { size: 'invisible' });
-    return recaptchaVerifier;
-  }
-
-  window.sendOtp = function (isResend) {
-    window.showAuthError_('');
-    const code = document.getElementById('phoneCountryCode').value;
-    const raw = document.getElementById('phoneNumberInput').value.replace(/[^0-9]/g, '');
-    if (raw.length < 6) {
-      window.showAuthError_('Enter a valid phone number.');
-      return;
-    }
-    const fullNumber = code + raw;
-    const btn = document.getElementById('sendOtpBtn');
-    btn.disabled = true;
-    btn.textContent = 'Sending…';
-
-    signInWithPhoneNumber(auth, fullNumber, ensureRecaptcha())
-      .then((confirmationResult) => {
-        otpConfirmationResult = confirmationResult;
-        document.getElementById('otpSentTo').textContent = fullNumber;
-        document.getElementById('phoneStep1').style.display = 'none';
-        document.getElementById('phoneStep2').style.display = 'block';
-        btn.disabled = false;
-        btn.textContent = 'Send OTP';
-      })
-      .catch((err) => {
-        console.error(err);
-        window.showAuthError_(friendlyAuthError(err));
-        btn.disabled = false;
-        btn.textContent = 'Send OTP';
-      });
-  };
-
-  window.verifyOtp = function () {
-    window.showAuthError_('');
-    const code = document.getElementById('otpCodeInput').value.trim();
-    if (!otpConfirmationResult || code.length < 4) {
-      window.showAuthError_('Enter the code we sent you.');
-      return;
-    }
-    const btn = document.getElementById('verifyOtpBtn');
-    btn.disabled = true;
-    btn.textContent = 'Verifying…';
-
-    otpConfirmationResult.confirm(code)
-      .then((result) => {
-        const phoneNumber = result.user.phoneNumber || document.getElementById('otpSentTo').textContent;
-        window.completeSignIn_({ name: phoneNumber, email: null, phone: phoneNumber, picture: '' });
-        btn.disabled = false;
-        btn.textContent = 'Verify & Sign In';
-      })
-      .catch((err) => {
-        console.error(err);
-        window.showAuthError_(friendlyAuthError(err));
-        btn.disabled = false;
-        btn.textContent = 'Verify & Sign In';
-      });
-  };
-
   window.firebaseSignOut = function () {
     if (auth.currentUser) signOut(auth).catch((e) => console.warn('Sign-out error:', e));
   };
 
-  function friendlyAuthError(err) {
-    const map = {
-      'auth/invalid-phone-number': 'That phone number looks invalid. Check the format and try again.',
-      'auth/too-many-requests': 'Too many attempts. Please wait a bit and try again.',
-      'auth/code-expired': 'That code expired. Request a new one.',
-      'auth/invalid-verification-code': 'Incorrect code. Please try again.',
-      'auth/billing-not-enabled': 'Phone sign-in isn\'t fully set up yet — please use Google sign-in for now.'
-    };
-    return map[err.code] || 'Something went wrong. Please try again.';
-  }
+  // Called by handleCredentialResponse() (Google button callback) in
+  // the main script, passing the ID token Google Identity Services
+  // returned.
+  window.signInWithGoogleViaFirebase = function (idToken) {
+    const credential = GoogleAuthProvider.credential(idToken);
+    return signInWithCredential(auth, credential).then((result) => {
+      const u = result.user;
+      return { name: u.displayName || u.email, email: u.email, picture: u.photoURL || '', uid: u.uid };
+    });
+  };
 </script>
 </body>
 </html>
