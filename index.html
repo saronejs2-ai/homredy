@@ -284,12 +284,12 @@
     .hero-stat .lbl { font-size: 13px; color: rgba(255,255,255,0.6); margin-top: 2px; }
 
     .hero-visual {
-      display: flex; flex-direction: column; gap: 12px;
-      position: relative; max-width: 260px; margin-left: auto;
+      display: flex; flex-direction: column; gap: 14px;
+      position: relative; max-width: 340px; margin-left: auto;
     }
     .review-float {
-      background: var(--white); border-radius: var(--radius-sm);
-      padding: 13px 15px; box-shadow: var(--shadow-lg);
+      background: var(--white); border-radius: var(--radius);
+      padding: 18px 20px; box-shadow: var(--shadow-lg);
     }
     .review-float-top { animation: driftTop 6s ease-in-out infinite; }
     .review-float-bottom { animation: driftBottom 6s ease-in-out infinite; animation-delay: 0.4s; }
@@ -304,19 +304,19 @@
     @media (prefers-reduced-motion: reduce) {
       .review-float-top, .review-float-bottom { animation: none; }
     }
-    .rf-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 6px; gap: 8px; }
-    .rf-property { font-size: 12px; font-weight: 700; color: var(--navy); }
-    .rf-city { font-size: 10px; color: var(--gray-400); margin-top: 1px; }
-    .rf-text { font-size: 11px; color: var(--gray-500); line-height: 1.5; margin-top: 6px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
-    .rf-meta { display: flex; align-items: center; gap: 6px; margin-top: 8px; }
+    .rf-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px; gap: 8px; }
+    .rf-property { font-size: 14px; font-weight: 700; color: var(--navy); }
+    .rf-city { font-size: 12px; color: var(--gray-400); margin-top: 2px; }
+    .rf-text { font-size: 13px; color: var(--gray-500); line-height: 1.6; margin-top: 8px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+    .rf-meta { display: flex; align-items: center; gap: 8px; margin-top: 10px; }
     .rf-avatar {
-      width: 20px; height: 20px; border-radius: 50%;
+      width: 26px; height: 26px; border-radius: 50%;
       background: linear-gradient(135deg, var(--sage), var(--navy));
       display: flex; align-items: center; justify-content: center;
-      font-size: 9px; font-weight: 700; color: var(--white);
+      font-size: 11px; font-weight: 700; color: var(--white);
     }
-    .rf-name { font-size: 10px; font-weight: 500; color: var(--gray-500); }
-    .review-float .stars .star { font-size: 11px; }
+    .rf-name { font-size: 12px; font-weight: 500; color: var(--gray-500); }
+    .review-float .stars .star { font-size: 14px; }
 
     /* How it works */
     .how-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 48px; }
