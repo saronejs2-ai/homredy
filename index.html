@@ -50,7 +50,6 @@
   </script>
 
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
-  <script src="https://accounts.google.com/gsi/client" async defer></script>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -122,10 +121,6 @@
       transition: background 0.2s; text-decoration: none; margin-left: 8px;
     }
     .nav-cta:hover { background: var(--navy-light); }
-    .nav-signup {
-      border: 1px solid var(--gray-200) !important; margin-left: 4px;
-    }
-    .nav-signup:hover { border-color: var(--navy); }
     .hamburger {
       display: none; background: none; border: none; cursor: pointer;
       flex-direction: column; gap: 5px; padding: 10px;
@@ -289,29 +284,39 @@
     .hero-stat .lbl { font-size: 13px; color: rgba(255,255,255,0.6); margin-top: 2px; }
 
     .hero-visual {
-      display: flex; flex-direction: column; gap: 14px;
-      position: relative;
+      display: flex; flex-direction: column; gap: 12px;
+      position: relative; max-width: 260px; margin-left: auto;
     }
     .review-float {
-      background: var(--white); border-radius: var(--radius);
-      padding: 20px 22px; box-shadow: var(--shadow-lg);
-      transition: transform 0.3s;
+      background: var(--white); border-radius: var(--radius-sm);
+      padding: 13px 15px; box-shadow: var(--shadow-lg);
     }
-    .review-float:hover { transform: translateY(-4px); }
-    .review-float-top { transform: translateX(20px); }
-    .review-float-bottom { transform: translateX(-10px); }
-    .rf-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px; }
-    .rf-property { font-size: 14px; font-weight: 700; color: var(--navy); }
-    .rf-city { font-size: 12px; color: var(--gray-400); margin-top: 2px; }
-    .rf-text { font-size: 13px; color: var(--gray-500); line-height: 1.6; margin-top: 8px; }
-    .rf-meta { display: flex; align-items: center; gap: 8px; margin-top: 10px; }
+    .review-float-top { animation: driftTop 6s ease-in-out infinite; }
+    .review-float-bottom { animation: driftBottom 6s ease-in-out infinite; animation-delay: 0.4s; }
+    @keyframes driftTop {
+      0%, 100% { transform: translateX(18px); }
+      50% { transform: translateX(0px); }
+    }
+    @keyframes driftBottom {
+      0%, 100% { transform: translateX(-10px); }
+      50% { transform: translateX(8px); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .review-float-top, .review-float-bottom { animation: none; }
+    }
+    .rf-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 6px; gap: 8px; }
+    .rf-property { font-size: 12px; font-weight: 700; color: var(--navy); }
+    .rf-city { font-size: 10px; color: var(--gray-400); margin-top: 1px; }
+    .rf-text { font-size: 11px; color: var(--gray-500); line-height: 1.5; margin-top: 6px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+    .rf-meta { display: flex; align-items: center; gap: 6px; margin-top: 8px; }
     .rf-avatar {
-      width: 26px; height: 26px; border-radius: 50%;
+      width: 20px; height: 20px; border-radius: 50%;
       background: linear-gradient(135deg, var(--sage), var(--navy));
       display: flex; align-items: center; justify-content: center;
-      font-size: 11px; font-weight: 700; color: var(--white);
+      font-size: 9px; font-weight: 700; color: var(--white);
     }
-    .rf-name { font-size: 12px; font-weight: 500; color: var(--gray-500); }
+    .rf-name { font-size: 10px; font-weight: 500; color: var(--gray-500); }
+    .review-float .stars .star { font-size: 11px; }
 
     /* How it works */
     .how-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 48px; }
@@ -497,18 +502,25 @@
       transition: box-shadow 0.2s, transform 0.2s;
     }
     .cities-city-card:hover { box-shadow: var(--shadow); transform: translateY(-2px); }
-    .cities-img-wrap { width: 100%; }
+    .cities-img-wrap { width: 100%; overflow: hidden; }
     .cities-img-placeholder {
       width: 100%; height: 130px;
       display: flex; align-items: flex-end; justify-content: center;
       overflow: hidden;
     }
+    .cities-img {
+      width: 100%; height: 130px;
+      object-fit: cover; display: block;
+      transition: transform 0.3s;
+    }
+    .cities-city-card:hover .cities-img { transform: scale(1.06); }
     .cities-label { padding: 12px 14px 14px; }
     .cities-name { font-size: 15px; font-weight: 700; color: var(--navy); margin: 0; }
     .cities-sub { font-size: 12px; color: var(--gray-400); margin: 4px 0 0; }
     @media (max-width: 600px) {
       .cities-city-card { flex: 0 0 160px; }
       .cities-img-placeholder { height: 106px; }
+      .cities-img { height: 106px; }
     }
 
 
@@ -783,53 +795,6 @@
       .modal-card { padding: 24px; max-height: 92vh; }
     }
 
-    /* ── AUTH GATE (Google Sign-In) ── */
-    .auth-card { max-width: 400px; text-align: center; }
-    .auth-icon {
-      width: 56px; height: 56px; border-radius: 50%;
-      background: var(--gray-100); display: flex; align-items: center;
-      justify-content: center; font-size: 26px; margin: 0 auto 16px;
-    }
-    .auth-card h3 { color: var(--navy); font-size: 20px; margin-bottom: 8px; }
-    .auth-card p { font-size: 14px; color: var(--gray-500); margin-bottom: 24px; line-height: 1.6; }
-    #google-signin-btn { display: flex; justify-content: center; min-height: 44px; }
-    .auth-fineprint { font-size: 12px; color: var(--gray-400); margin-top: 18px; line-height: 1.5; }
-    .auth-fineprint button {
-      background: none; border: none; color: var(--navy); text-decoration: underline;
-      cursor: pointer; font-family: inherit; font-size: 12px; padding: 0;
-    }
-    .auth-error {
-      background: #FEF2F2; color: #B91C1C; font-size: 13px; padding: 10px 12px;
-      border-radius: var(--radius-sm); margin-top: 14px; text-align: left;
-    }
-
-    /* ── SIGNED-IN USER BADGE (nav) ── */
-    .user-badge {
-      display: none; align-items: center; gap: 8px; cursor: pointer;
-      padding: 4px 10px 4px 4px; border-radius: 999px; position: relative;
-    }
-    .user-badge.show { display: flex; }
-    .user-badge img {
-      width: 28px; height: 28px; border-radius: 50%; object-fit: cover;
-    }
-    .user-badge span { font-size: 14px; font-weight: 500; color: var(--gray-700); }
-    .user-menu {
-      display: none; position: absolute; top: 44px; right: 0;
-      background: var(--white); border-radius: var(--radius-sm);
-      box-shadow: var(--shadow-lg); min-width: 160px; z-index: 210;
-      border: 1px solid var(--gray-200); overflow: hidden;
-    }
-    .user-menu.open { display: block; }
-    .user-menu button {
-      width: 100%; text-align: left; padding: 10px 14px; background: none;
-      border: none; cursor: pointer; font-family: inherit; font-size: 14px;
-      color: var(--gray-700);
-    }
-    .user-menu button:hover { background: var(--gray-50); }
-    @media (max-width: 640px) {
-      .auth-card { padding: 24px; }
-    }
-
     /* ── PAGE HEADER ── */
     .page-hero { background: var(--white); padding: 48px 0; border-bottom: 1px solid var(--gray-200); }
     .page-hero h1 { font-size: clamp(28px, 4vw, 44px); }
@@ -911,14 +876,6 @@
       <button class="nav-link" onclick="showPage('about')">About</button>
       <button class="nav-link" onclick="showPage('contact')">Contact</button>
       <button class="nav-cta" onclick="showPage('submit')">Submit a Review</button>
-      <button class="nav-link nav-signup" id="navSignUpBtn" onclick="openAuthModal('home')">Sign Up</button>
-      <div class="user-badge" id="userBadge" onclick="toggleUserMenu()">
-        <img id="userBadgeImg" src="" alt="" />
-        <span id="userBadgeName"></span>
-        <div class="user-menu" id="userMenu">
-          <button onclick="signOutUser()">Sign out</button>
-        </div>
-      </div>
     </div>
     <button class="hamburger" onclick="toggleMenu()" aria-label="Menu">
       <span></span><span></span><span></span>
@@ -934,7 +891,6 @@
   <button class="nav-link" onclick="showPage('privacy');toggleMenu()">Privacy Policy</button>
   <button class="nav-link" onclick="showPage('terms');toggleMenu()">Terms of Service</button>
   <button class="nav-link" onclick="showPage('contact');toggleMenu()">Contact</button>
-  <button class="nav-link" id="mobileSignUpBtn" onclick="openAuthModal('home');toggleMenu()">Sign Up</button>
   <button class="nav-cta" onclick="showPage('submit');toggleMenu()">Submit a Review →</button>
 </div>
 
@@ -1023,15 +979,7 @@
 
         <div class="cities-city-card" onclick="goToCity('bengaluru')">
           <div class="cities-img-wrap">
-            <div class="cities-img-placeholder" style="background: linear-gradient(160deg,#b8cfe0 0%,#7fa8c4 100%);">
-              <svg viewBox="0 0 160 110" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;opacity:0.35;">
-                <rect x="10" y="60" width="20" height="50" fill="#1D3C5A"/>
-                <rect x="35" y="40" width="25" height="70" fill="#1D3C5A"/>
-                <rect x="65" y="50" width="18" height="60" fill="#1D3C5A"/>
-                <rect x="88" y="30" width="30" height="80" fill="#1D3C5A"/>
-                <rect x="122" y="55" width="22" height="55" fill="#1D3C5A"/>
-              </svg>
-            </div>
+            <img class="cities-img" src="https://images.unsplash.com/photo-1687158267365-3584c7966bc4?w=400&h=260&q=80&fit=crop&auto=format" alt="Bengaluru" loading="lazy" onerror="this.style.display='none';this.parentElement.style.background='linear-gradient(160deg,#b8cfe0 0%,#7fa8c4 100%)';this.parentElement.innerHTML+='<div style=\'display:flex;align-items:center;justify-content:center;height:130px;font-size:32px;\'>🏙</div>'" />
           </div>
           <div class="cities-label">
             <p class="cities-name">Bengaluru</p>
@@ -1041,15 +989,7 @@
 
         <div class="cities-city-card" onclick="goToCity('delhi')">
           <div class="cities-img-wrap">
-            <div class="cities-img-placeholder" style="background: linear-gradient(160deg,#d4c5a0 0%,#b8a070 100%);">
-              <svg viewBox="0 0 160 110" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;opacity:0.35;">
-                <rect x="15" y="50" width="18" height="60" fill="#5c3317"/>
-                <rect x="38" y="35" width="22" height="75" fill="#5c3317"/>
-                <rect x="65" y="45" width="30" height="65" fill="#5c3317"/>
-                <rect x="100" y="30" width="20" height="80" fill="#5c3317"/>
-                <rect x="125" y="55" width="18" height="55" fill="#5c3317"/>
-              </svg>
-            </div>
+            <img class="cities-img" src="https://images.unsplash.com/photo-1587474260584-136574528ed5?w=400&h=260&q=80&fit=crop&auto=format" alt="Delhi" loading="lazy" onerror="this.style.display='none';this.parentElement.style.background='linear-gradient(160deg,#d4c5a0 0%,#b8a070 100%)';this.parentElement.innerHTML+='<div style=\'display:flex;align-items:center;justify-content:center;height:130px;font-size:32px;\'>🕌</div>'" />
           </div>
           <div class="cities-label">
             <p class="cities-name">Delhi NCR</p>
@@ -1059,16 +999,7 @@
 
         <div class="cities-city-card" onclick="goToCity('mumbai')">
           <div class="cities-img-wrap">
-            <div class="cities-img-placeholder" style="background: linear-gradient(160deg,#a8c5d8 0%,#6699bb 100%);">
-              <svg viewBox="0 0 160 110" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;opacity:0.35;">
-                <rect x="5"  y="20" width="16" height="90" fill="#0f4c75"/>
-                <rect x="25" y="35" width="20" height="75" fill="#0f4c75"/>
-                <rect x="50" y="10" width="18" height="100" fill="#0f4c75"/>
-                <rect x="73" y="40" width="22" height="70" fill="#0f4c75"/>
-                <rect x="100" y="25" width="16" height="85" fill="#0f4c75"/>
-                <rect x="120" y="45" width="20" height="65" fill="#0f4c75"/>
-              </svg>
-            </div>
+            <img class="cities-img" src="https://images.unsplash.com/photo-1570168007204-dfb528c6958f?w=400&h=260&q=80&fit=crop&auto=format" alt="Mumbai" loading="lazy" onerror="this.style.display='none';this.parentElement.style.background='linear-gradient(160deg,#a8c5d8 0%,#6699bb 100%)';this.parentElement.innerHTML+='<div style=\'display:flex;align-items:center;justify-content:center;height:130px;font-size:32px;\'>🌊</div>'" />
           </div>
           <div class="cities-label">
             <p class="cities-name">Mumbai</p>
@@ -1078,15 +1009,7 @@
 
         <div class="cities-city-card" onclick="goToCity('hyderabad')">
           <div class="cities-img-wrap">
-            <div class="cities-img-placeholder" style="background: linear-gradient(160deg,#c9b8d4 0%,#9a7aaa 100%);">
-              <svg viewBox="0 0 160 110" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;opacity:0.35;">
-                <rect x="12" y="55" width="20" height="55" fill="#4a1942"/>
-                <rect x="36" y="38" width="24" height="72" fill="#4a1942"/>
-                <rect x="65" y="48" width="18" height="62" fill="#4a1942"/>
-                <rect x="88" y="28" width="28" height="82" fill="#4a1942"/>
-                <rect x="120" y="52" width="22" height="58" fill="#4a1942"/>
-              </svg>
-            </div>
+            <img class="cities-img" src="https://images.unsplash.com/photo-1551161242-b5af797b7233?w=400&h=260&q=80&fit=crop&auto=format" alt="Hyderabad" loading="lazy" onerror="this.style.display='none';this.parentElement.style.background='linear-gradient(160deg,#c9b8d4 0%,#9a7aaa 100%)';this.parentElement.innerHTML+='<div style=\'display:flex;align-items:center;justify-content:center;height:130px;font-size:32px;\'>💎</div>'" />
           </div>
           <div class="cities-label">
             <p class="cities-name">Hyderabad</p>
@@ -1096,15 +1019,7 @@
 
         <div class="cities-city-card" onclick="goToCity('pune')">
           <div class="cities-img-wrap">
-            <div class="cities-img-placeholder" style="background: linear-gradient(160deg,#b8d4c0 0%,#7aaa88 100%);">
-              <svg viewBox="0 0 160 110" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;opacity:0.35;">
-                <rect x="8"  y="58" width="18" height="52" fill="#1a4731"/>
-                <rect x="30" y="42" width="22" height="68" fill="#1a4731"/>
-                <rect x="57" y="52" width="20" height="58" fill="#1a4731"/>
-                <rect x="82" y="35" width="26" height="75" fill="#1a4731"/>
-                <rect x="113" y="55" width="20" height="55" fill="#1a4731"/>
-              </svg>
-            </div>
+            <img class="cities-img" src="https://images.unsplash.com/photo-1558431382-27e303142255?w=400&h=260&q=80&fit=crop&auto=format" alt="Pune" loading="lazy" onerror="this.style.display='none';this.parentElement.style.background='linear-gradient(160deg,#b8d4c0 0%,#7aaa88 100%)';this.parentElement.innerHTML+='<div style=\'display:flex;align-items:center;justify-content:center;height:130px;font-size:32px;\'>🏛</div>'" />
           </div>
           <div class="cities-label">
             <p class="cities-name">Pune</p>
@@ -1114,16 +1029,7 @@
 
         <div class="cities-city-card" onclick="goToCity('chennai')">
           <div class="cities-img-wrap">
-            <div class="cities-img-placeholder" style="background: linear-gradient(160deg,#d4c4a0 0%,#c4a460 100%);">
-              <svg viewBox="0 0 160 110" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;opacity:0.35;">
-                <rect x="10" y="62" width="16" height="48" fill="#7d4e00"/>
-                <rect x="30" y="44" width="20" height="66" fill="#7d4e00"/>
-                <rect x="55" y="54" width="22" height="56" fill="#7d4e00"/>
-                <rect x="82" y="36" width="24" height="74" fill="#7d4e00"/>
-                <rect x="111" y="58" width="18" height="52" fill="#7d4e00"/>
-                <rect x="133" y="48" width="16" height="62" fill="#7d4e00"/>
-              </svg>
-            </div>
+            <img class="cities-img" src="https://images.unsplash.com/photo-1582510003544-4d00b7f74220?w=400&h=260&q=80&fit=crop&auto=format" alt="Chennai" loading="lazy" onerror="this.style.display='none';this.parentElement.style.background='linear-gradient(160deg,#d4c4a0 0%,#c4a460 100%)';this.parentElement.innerHTML+='<div style=\'display:flex;align-items:center;justify-content:center;height:130px;font-size:32px;\'>🌅</div>'" />
           </div>
           <div class="cities-label">
             <p class="cities-name">Chennai</p>
@@ -1132,7 +1038,7 @@
         </div>
 
       </div>
-      <p style="font-size: 12px; color: var(--gray-400); margin-top: 12px;">Photos via Google Maps · Coming soon</p>
+      <p style="font-size: 12px; color: var(--gray-400); margin-top: 12px;">Photos via Unsplash</p>
     </div>
   </section>
 
@@ -1296,7 +1202,7 @@
 
           <div class="city-card" onclick="goToCity('bengaluru')">
             <div class="city-img-wrap">
-              <img class="city-img" src="https://images.unsplash.com/photo-1600100397608-f82062c42a65?w=400&h=220&q=80&fit=crop&auto=format" alt="Bengaluru" loading="lazy" onerror="this.style.display='none';this.parentElement.style.background='#E8EEF4';this.parentElement.innerHTML+='<div style=\'display:flex;align-items:center;justify-content:center;height:110px;font-size:32px;\'>🏙</div>'" />
+              <img class="city-img" src="https://images.unsplash.com/photo-1687158267365-3584c7966bc4?w=400&h=220&q=80&fit=crop&auto=format" alt="Bengaluru" loading="lazy" onerror="this.style.display='none';this.parentElement.style.background='#E8EEF4';this.parentElement.innerHTML+='<div style=\'display:flex;align-items:center;justify-content:center;height:110px;font-size:32px;\'>🏙</div>'" />
             </div>
             <div class="city-label">
               <p class="city-name">Bengaluru</p>
@@ -1326,7 +1232,7 @@
 
           <div class="city-card" onclick="goToCity('hyderabad')">
             <div class="city-img-wrap">
-              <img class="city-img" src="https://images.unsplash.com/photo-1594476657933-380e7e373c3e?w=400&h=220&q=80&fit=crop&auto=format" alt="Hyderabad" loading="lazy" onerror="this.style.display='none';this.parentElement.style.background='#F0FDF4';this.parentElement.innerHTML+='<div style=\'display:flex;align-items:center;justify-content:center;height:110px;font-size:32px;\'>💎</div>'" />
+              <img class="city-img" src="https://images.unsplash.com/photo-1551161242-b5af797b7233?w=400&h=220&q=80&fit=crop&auto=format" alt="Hyderabad" loading="lazy" onerror="this.style.display='none';this.parentElement.style.background='#F0FDF4';this.parentElement.innerHTML+='<div style=\'display:flex;align-items:center;justify-content:center;height:110px;font-size:32px;\'>💎</div>'" />
             </div>
             <div class="city-label">
               <p class="city-name">Hyderabad</p>
@@ -2428,178 +2334,9 @@
   </div>
 </div>
 
-<!-- Auth Gate Modal (Google Sign-In) -->
-<div class="modal-overlay" id="authModalOverlay">
-  <div class="modal-card auth-card">
-    <button class="modal-close" onclick="closeAuthModal()" aria-label="Close">×</button>
-    <div class="auth-icon">🔐</div>
-    <h3>Sign in to browse reviews</h3>
-    <p>Create a free Homredy account with Google to read real tenant reviews. It takes a few seconds — no password needed.</p>
-
-    <div id="google-signin-btn"></div>
-
-    <p class="auth-error" id="authError" style="display:none;"></p>
-
-    <p class="auth-fineprint">
-      By continuing, you agree to our <button onclick="showPage('terms')">Terms of Service</button> and <button onclick="showPage('privacy')">Privacy Policy</button>.
-    </p>
-  </div>
-</div>
-
 <script>
-  // ══════════════════════════════════════════════════════════════════
-  // GOOGLE SIGN-IN (auth gate for Browse Reviews)
-  // ══════════════════════════════════════════════════════════════════
-  // TODO: replace with your own OAuth 2.0 Client ID from
-  // https://console.cloud.google.com/apis/credentials
-  // (Application type: "Web application"; add https://www.homredy.com
-  // to "Authorized JavaScript origins" — no redirect URI needed for
-  // Google Identity Services' popup/One Tap sign-in.)
-  const GOOGLE_CLIENT_ID = '718351859738-qh544fb7t3732qghhmt9r2377vr5pqhg.apps.googleusercontent.com';
-
-  function showAuthError(message) {
-    const el = document.getElementById('authError');
-    el.textContent = message;
-    el.style.display = message ? 'block' : 'none';
-  }
-
-  // Called once a sign-in completes (Google via Firebase).
-  window.completeSignIn_ = function (user) {
-    localStorage.setItem(AUTH_STORAGE_KEY, JSON.stringify(user));
-    updateAuthUI();
-    closeAuthModal();
-    const target = pendingPage || 'browse';
-    pendingPage = null;
-    renderPage(target);
-  };
-
-  const AUTH_STORAGE_KEY = 'homredy_user';
-  let pendingPage = null; // page the user was trying to reach when the gate opened
-
-  function getCurrentUser() {
-    try {
-      const raw = localStorage.getItem(AUTH_STORAGE_KEY);
-      return raw ? JSON.parse(raw) : null;
-    } catch (e) {
-      return null;
-    }
-  }
-
-  function isSignedIn() {
-    return !!getCurrentUser();
-  }
-
-  // This is called by Google Identity Services with an ID token. We
-  // hand that token to Firebase (via window.signInWithGoogleViaFirebase,
-  // defined in the Firebase module script) so Google sign-ups create a
-  // real Firebase Auth user too — visible in Firebase Console →
-  // Authentication → Users, same place Phone sign-ups show up.
-  function handleCredentialResponse(response) {
-    showAuthError('');
-    if (!window.signInWithGoogleViaFirebase) {
-      showAuthError('Sign-in is still loading — please try again in a moment.');
-      return;
-    }
-    window.signInWithGoogleViaFirebase(response.credential)
-      .then((user) => {
-        window.completeSignIn_(user);
-      })
-      .catch((err) => {
-        console.error(err);
-        showAuthError('Google sign-in failed — please try again.');
-      });
-  }
-
-  function signOutUser() {
-    localStorage.removeItem(AUTH_STORAGE_KEY);
-    if (window.google && google.accounts && google.accounts.id) {
-      google.accounts.id.disableAutoSelect();
-    }
-    if (window.firebaseSignOut) {
-      window.firebaseSignOut();
-    }
-    updateAuthUI();
-    document.getElementById('userMenu').classList.remove('open');
-    showPage('home');
-  }
-
-  function toggleUserMenu() {
-    document.getElementById('userMenu').classList.toggle('open');
-  }
-
-  // Builds a simple initials-avatar for phone users (no photo available).
-  function initialsAvatar(name) {
-    const initial = (name || '?').replace('+', '').trim().charAt(0).toUpperCase();
-    const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="56" height="56"><rect width="56" height="56" rx="28" fill="#1D3C5A"/><text x="50%" y="54%" font-family="Inter, sans-serif" font-size="24" fill="#fff" text-anchor="middle" dominant-baseline="middle">${initial}</text></svg>`;
-    return 'data:image/svg+xml;base64,' + btoa(svg);
-  }
-
-  function updateAuthUI() {
-    const user = getCurrentUser();
-    const badge = document.getElementById('userBadge');
-    const navSignUp = document.getElementById('navSignUpBtn');
-    const mobileSignUp = document.getElementById('mobileSignUpBtn');
-    if (user) {
-      document.getElementById('userBadgeImg').src = user.picture || initialsAvatar(user.name);
-      document.getElementById('userBadgeImg').alt = user.name;
-      document.getElementById('userBadgeName').textContent = user.email ? user.name.split(' ')[0] : user.name;
-      badge.classList.add('show');
-      if (navSignUp) navSignUp.style.display = 'none';
-      if (mobileSignUp) mobileSignUp.style.display = 'none';
-    } else {
-      badge.classList.remove('show');
-      if (navSignUp) navSignUp.style.display = '';
-      if (mobileSignUp) mobileSignUp.style.display = '';
-    }
-  }
-
-  function openAuthModal(targetPage) {
-    pendingPage = targetPage;
-    showAuthError('');
-    document.getElementById('authModalOverlay').classList.add('open');
-  }
-
-  function closeAuthModal() {
-    document.getElementById('authModalOverlay').classList.remove('open');
-  }
-
-  function initGoogleSignIn() {
-    if (!window.google || !google.accounts || !google.accounts.id) return;
-    google.accounts.id.initialize({
-      client_id: GOOGLE_CLIENT_ID,
-      callback: handleCredentialResponse
-    });
-    const btnContainer = document.getElementById('google-signin-btn');
-    if (btnContainer) {
-      google.accounts.id.renderButton(btnContainer, {
-        theme: 'outline', size: 'large', width: 300, text: 'signup_with'
-      });
-    }
-  }
-
-  window.addEventListener('load', () => {
-    updateAuthUI();
-    initGoogleSignIn();
-    initFirebase();
-  });
-
-
-  document.addEventListener('click', (e) => {
-    const badge = document.getElementById('userBadge');
-    if (badge && !badge.contains(e.target)) {
-      document.getElementById('userMenu').classList.remove('open');
-    }
-  });
-
   // ── Page routing ──
-  // Pages that require sign-in before they can be viewed.
-  const GATED_PAGES = ['browse'];
-
   function showPage(name) {
-    if (GATED_PAGES.includes(name) && !isSignedIn()) {
-      openAuthModal(name);
-      return;
-    }
     renderPage(name);
   }
 
@@ -3300,48 +3037,5 @@
   window.fetchAndRenderReviews();
 </script>
 
-<script type="module">
-  // ══════════════════════════════════════════════════════════════════
-  // GOOGLE SIGN-IN VIA FIREBASE — reuses the same Firebase project as
-  // above ("homredy-fb5b0"), so Google sign-ups create a real
-  // Firebase Auth user (visible in Firebase Console → Authentication
-  // → Users), not just a browser-local session.
-  // ══════════════════════════════════════════════════════════════════
-  import { initializeApp, getApps, getApp } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-app.js";
-  import {
-    getAuth, signOut, GoogleAuthProvider, signInWithCredential
-  } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-auth.js";
-
-  const firebaseConfig = {
-    apiKey: "AIzaSyC_sF4yTR_BImsRynqvfmoEydjxMIrrIkM",
-    authDomain: "homredy-fb5b0.firebaseapp.com",
-    projectId: "homredy-fb5b0",
-    storageBucket: "homredy-fb5b0.firebasestorage.app",
-    messagingSenderId: "187836764273",
-    appId: "1:187836764273:web:e3ac7de304ed1499734bd0",
-    measurementId: "G-ZN7YBVDH3R"
-  };
-
-  // Reuse the app instance if the Firestore module above already
-  // initialized it (same URL → same module registry → shared state);
-  // otherwise initialize it here.
-  const authApp = getApps().length ? getApp() : initializeApp(firebaseConfig);
-  const auth = getAuth(authApp);
-
-  window.firebaseSignOut = function () {
-    if (auth.currentUser) signOut(auth).catch((e) => console.warn('Sign-out error:', e));
-  };
-
-  // Called by handleCredentialResponse() (Google button callback) in
-  // the main script, passing the ID token Google Identity Services
-  // returned.
-  window.signInWithGoogleViaFirebase = function (idToken) {
-    const credential = GoogleAuthProvider.credential(idToken);
-    return signInWithCredential(auth, credential).then((result) => {
-      const u = result.user;
-      return { name: u.displayName || u.email, email: u.email, picture: u.photoURL || '', uid: u.uid };
-    });
-  };
-</script>
 </body>
 </html>
